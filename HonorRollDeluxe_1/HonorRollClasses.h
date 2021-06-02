@@ -9,7 +9,7 @@
 #include <time.h>
 #include <algorithm>
 #include <vector>
-#include <conio.h>
+#include <ncurses.h>
 #include <math.h>
 
 class Course;

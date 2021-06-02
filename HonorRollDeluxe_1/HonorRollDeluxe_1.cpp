@@ -1,6 +1,6 @@
 #include <iostream>
 #include "HonorRollClasses.h"
-#include <conio.h>
+#include <ncurses.h>
 
 int main() {
   std::string response = "";
