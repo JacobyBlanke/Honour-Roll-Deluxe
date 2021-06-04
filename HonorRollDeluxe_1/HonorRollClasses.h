@@ -12,6 +12,8 @@
 #include <conio.h>
 #include <math.h>
 
+EasyFile 
+
 class Course;
 
 class student
@@ -77,7 +79,7 @@ public:
 	// Methods //
 	void setPath(std::string);
 	void setFile(EasyFile);
+	void addStudent(student);
+	void removeStudent(student);
 	bool readData();
-	
-
 };

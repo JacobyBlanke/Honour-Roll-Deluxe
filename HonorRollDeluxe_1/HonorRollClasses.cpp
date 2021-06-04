@@ -158,3 +158,40 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse) {
 }
 #pragma endregion
 
+#pragma region Class 
+
+Class::Class() {
+
+}
+
+Class::Class(std::string name) {
+    className = name;
+}
+
+Class::Class() {
+
+}
+
+Class::Class() {
+
+}
+
+Class::Class() {
+
+}
+
+Class::Class() {
+
+}
+
+Class::Class() {
+
+}
+
+Class::Class() {
+
+}
+
+
+
+#pragma endregion
