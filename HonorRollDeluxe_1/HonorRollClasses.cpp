@@ -8,6 +8,8 @@
 #include "GetData.h"
 #include "EasyFile.h"
 #include <vector>
+#include <string_view>
+#include <sstream>
 
 const int MAX_COURSES = 8; // The maximum number of courses allowed
 const int MAX_SCORE = 120; // The maximum grade allowed
@@ -31,20 +33,14 @@ std::vector<std::string> getFullName() {
       break;
     std::cout << "\nInvalid name. Please have more than 1 character.\n" << std::endl;
   }
-  tester = givenName;
-  pos = 0;
-  token = " ";
-  int j = 0;
-  for (int i = 0; i < givenName.length(); i++) {
-    while (!isspace(givenName[i])) {
-      arr[j] += givenName[i];
-      i++;
-    }
-    j++;
-    if (j >= 2)
-      break;
+   
+
+  std::istringstream iss(givenName, std::istringstream::in);
+  int i = 0;
+  while(iss >> arr[i])
+    i++;
     
-  }
+
   return std::vector<std::string>{arr[0], arr[1]};
 }
 
