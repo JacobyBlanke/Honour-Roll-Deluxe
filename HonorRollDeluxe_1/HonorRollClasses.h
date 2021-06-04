@@ -54,3 +54,30 @@ public:
 	void setGrade(int); // Sets the current grade to a given value
 	friend std::ostream& operator<<(std::ostream&, const Course&); // Overloading the '<<' operator for printing.
 };
+
+class Class {
+private: 
+	// Contructable //
+	std::string className = "";
+	std::vector<student> students;
+	EasyFile path;
+	// Unconstructable //
+	bool readSuccessful = false;
+public: 
+	// Constructors //
+	Class();
+	Class(std::string);
+	Class(std::vector<student>);
+	Class(EasyFile);
+	Class(std::string, std::vector<student>);
+	Class(std::vector<student>, EasyFile);
+	Class(std::string, EasyFile);
+	Class(std::string, std::vector<student>, EasyFile);
+
+	// Methods //
+	void setPath(std::string);
+	void setFile(EasyFile);
+	bool readData();
+	
+
+};
