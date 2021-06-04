@@ -13,7 +13,7 @@
 #include <math.h>
 #include "EasyFile.h"
 
-EasyFile Classes("Classes.txt");
+EasyFile Addresses("Classes.txt");
 
 class Course;
 
