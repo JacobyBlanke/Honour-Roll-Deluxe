@@ -11,8 +11,9 @@
 #include <vector>
 #include <conio.h>
 #include <math.h>
+#include "EasyFile.h"
 
-EasyFile 
+EasyFile Classes("Classes.txt");
 
 class Course;
 
@@ -62,7 +63,7 @@ private:
 	// Contructable //
 	std::string className = "";
 	std::vector<student> students;
-	EasyFile path;
+	EasyFile classFile;
 	// Unconstructable //
 	bool readSuccessful = false;
 public: 

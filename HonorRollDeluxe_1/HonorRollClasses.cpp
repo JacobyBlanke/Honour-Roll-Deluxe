@@ -6,7 +6,6 @@
   */
 #include "HonorRollClasses.h"
 #include "GetData.h"
-#include "EasyFile.h"
 #include <vector>
 #include <string_view>
 #include <sstream>
@@ -164,27 +163,27 @@ Class::Class(std::string name) {
     className = name;
 }
 
-Class::Class() {
+Class::Class(std::vector<student> givenStudents) {
+    students = givenStudents;
+}
+
+Class::Class(EasyFile file) {
+    classFile = file;
+}
+
+Class::Class(std::string name, std::vector<student> givenStudents) {
 
 }
 
-Class::Class() {
+Class::Class(std::vector<student> givenStudents, EasyFile file) {
 
 }
 
-Class::Class() {
+Class::Class(std::string name, EasyFile file) {
 
 }
 
-Class::Class() {
-
-}
-
-Class::Class() {
-
-}
-
-Class::Class() {
+Class::Class(std::string name, std::vector<student> givenStudents, EasyFile file) {
 
 }
 
