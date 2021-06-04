@@ -25,5 +25,7 @@ Added :
 
 bool getValidInt(int&);
 bool getValidFloat(float&);
-bool getValidDouble(double&);
+bool getValidDouble(double&); 
+
+// Test comment
 
