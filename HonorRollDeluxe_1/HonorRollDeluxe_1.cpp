@@ -3,6 +3,11 @@
 #include <conio.h>
 
 int main() {
+	student test;
+	test.promptGrades();
+	ClassCollection cc;
+	cc.setPath("SampleClass.txt");
+	cc.addStudent(test);
   std::string response = "";
   char yn;
   do {

@@ -40,7 +40,7 @@ std::vector<std::string> getFullName() {
     i++;
     
 
-  return std::vector<std::string>{arr[0], arr[1]};
+  return std::vector<std::string>{arr[1], arr[0]};
 }
 
 student::student() {
@@ -62,7 +62,6 @@ student::student(std::string firstName, std::string lastName)
 }
 
 void student::promptGrades() { // Prompts the user for grades.
-    
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
     while (!getValidInt(courseNum)) {
@@ -113,6 +112,15 @@ void student::update() {
     updateEligibility();
 }
 
+std::string student::getSaveString() {
+    std::string fin = fName + ";" + lName + ";" + std::to_string(average) + ";";
+    (hasDisciplineIssue) ? fin += "Y;" : fin += "N;";
+    for (Course i : courses) {
+        fin += i.getName() + ";" + std::to_string(i.getGrade());
+    }
+    fin += "\n";
+    return fin;
+}
 
 std::ostream& operator<<(std::ostream& output, const student& aStudent) {
     
@@ -143,6 +151,10 @@ int Course::getGrade() {
     return grade;
 }
 
+std::string Course::getName() {
+    return courseName;
+}
+
 void Course::setGrade(int newGrade) {
     grade = newGrade;
 }
@@ -156,17 +168,15 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse) {
 #pragma region Class 
 
 ClassCollection::ClassCollection() {
-    classFile.setPath("Classes.txt");
 }
 
 ClassCollection::ClassCollection(std::string name) {
     className = name;
-    classFile.setPath("Classes.txt");
 }
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents) {
     students = givenStudents;
-    classFile.setPath("Classes.txt");
+
 }
 
 ClassCollection::ClassCollection(EasyFile file) {
@@ -176,7 +186,6 @@ ClassCollection::ClassCollection(EasyFile file) {
 ClassCollection::ClassCollection(std::string name, std::vector<student> givenStudents) {
     className = name;
     students = givenStudents;
-    classFile.setPath("Classes.txt");
 }
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents, EasyFile file) {
@@ -195,6 +204,16 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     classFile = file;
 }
 
+void ClassCollection::setPath(std::string path) {
+    classFile.setPath(path);
+}
 
+void ClassCollection::setFile(EasyFile file) {
+    classFile = file;
+}
 
+void ClassCollection::addStudent(student s) {
+    students.push_back(s);
+    classFile.appendString(s.getSaveString());
+}
 #pragma endregion

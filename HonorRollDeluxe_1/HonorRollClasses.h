@@ -23,10 +23,10 @@ private:
   	// Constructable //
 	std::string fName = "", lName = "";
 	bool hasDisciplineIssue = false;
-
-	// Non-constructable //
 	std::vector<Course> courses;
 	int average = 0;
+
+	// Non-constructable //
 	bool isEligible = false;
 public:
   student();
@@ -36,6 +36,7 @@ public:
 	void updateEligibility(); // Updates the eligibility for Honor Roll
 	void update(); // Updates the entire class
 	int getAvg(); // Returns the current student's average
+	std::string getSaveString(); // Returns the student's data in a string for saving.
   friend std::ostream& operator<<(std::ostream&, const student&);
 };
 
@@ -54,7 +55,9 @@ public:
   
 	// Methods //
 	int getGrade(void); // Returns the current grade of this course;
+	std::string getName(void); // Returns the name of the course;
 	void setGrade(int); // Sets the current grade to a given value
+
 	friend std::ostream& operator<<(std::ostream&, const Course&); // Overloading the '<<' operator for printing.
 };
 
@@ -64,6 +67,11 @@ private:
 	std::string className = "";
 	std::vector<student> students;
 	EasyFile classFile;
+	// ---- File Structure ---- //
+	/*
+		FName;LName;Total_Avg;Disp_Infraction[Y or N];Class1;Grade;Class2;Grade;Class3;Grade... 
+	*/
+
 	// Unconstructable //
 	bool readSuccessful = false;
 public: 
