@@ -9,7 +9,7 @@
 #include <time.h>
 #include <algorithm>
 #include <vector>
-#include <ncurses.h>
+#include <conio.h>
 #include <math.h>
 #include "EasyFile.h"
 

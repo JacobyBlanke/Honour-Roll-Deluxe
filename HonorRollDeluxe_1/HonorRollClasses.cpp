@@ -68,9 +68,6 @@ std::vector<std::string> getFullName()
   while(iss >> arr[i])
     i++;
     
-
-  return std::vector<std::string>{arr[0], arr[1]};
-
   return std::vector<std::string>{arr[1], arr[0]};
 }
 
@@ -93,8 +90,7 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
-void student::promptGrades() // Prompts the user for grades.
-{
+
 void student::promptGrades() { // Prompts the user for grades.
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
@@ -193,8 +189,7 @@ int Course::getGrade()
     return grade;
 }
 
-void Course::setGrade(int newGrade) 
-{
+
 std::string Course::getName() {
     return courseName;
 }
@@ -212,32 +207,22 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse)
 
 #pragma region Class 
 
-Class::Class() 
+ClassCollection::ClassCollection()
 {
 
 }
 
-Class::Class(std::string name) 
+ClassCollection::ClassCollection(std::string name)
 {
     className = name;
 }
 
-Class::Class(std::vector<student> givenStudents) 
-{
-ClassCollection::ClassCollection() {
-}
-
-ClassCollection::ClassCollection(std::string name) {
-    className = name;
-}
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents) {
     students = givenStudents;
 
 }
 
-Class::Class(EasyFile file) 
-{
 ClassCollection::ClassCollection(EasyFile file) {
     classFile = file;
 }
@@ -246,19 +231,6 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     className = name;
     students = givenStudents;
 }
-
-Class::Class(std::vector<student> givenStudents, EasyFile file) 
-{
-
-}
-
-Class::Class(std::string name, EasyFile file) 
-{
-
-}
-
-Class::Class(std::string name, std::vector<student> givenStudents, EasyFile file) 
-{
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents, EasyFile file) {
     students = givenStudents;
