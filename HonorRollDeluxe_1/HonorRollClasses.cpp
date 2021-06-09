@@ -67,13 +67,8 @@ std::vector<std::string> getFullName()
   int i = 0;
   while(iss >> arr[i])
     i++;
-    
-<<<<<<< HEAD
-  return std::vector<std::string>{arr[0], arr[1]};
-=======
-
   return std::vector<std::string>{arr[1], arr[0]};
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
+
 }
 
 student::student() 
@@ -95,12 +90,9 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
-<<<<<<< HEAD
-void student::promptGrades() // Prompts the user for grades.
-{
-=======
+
 void student::promptGrades() { // Prompts the user for grades.
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
+
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
     while (!getValidInt(courseNum)) {

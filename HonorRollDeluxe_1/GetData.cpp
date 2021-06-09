@@ -143,3 +143,15 @@ bool getValidDouble(double& t_double) {
 }
 
 
+Menu::Menu() {
+	// Do nothing
+}
+
+Menu::Menu(std::vector<std::string> givenOptions, std::string givenPrompt) {
+	options = givenOptions;
+	prompt = givenPrompt;
+}
+
+int Menu::getSelectedOption() {
+	std::string printData;
+}
