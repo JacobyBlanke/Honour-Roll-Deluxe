@@ -6,7 +6,7 @@
 GetData.h
 
 Original made by: Ms. DiGiovanna
-Used by: Alexei Korolev
+Edited by: Alexei Korolev
 8.0 Worksheets
 5 / 17 / 21
 Extras:
@@ -27,5 +27,12 @@ bool getValidInt(int&);
 bool getValidFloat(float&);
 bool getValidDouble(double&); 
 
-// Test comment
+class Menu {
+public:
+    Menu();
+    Menu(std::vector<std::string>, std::string);
+    std::vector<std::string> options; // All the options
+    std::string prompt = "";
+    int getSelectedOption(); // Returns the index of the option.
+};
 

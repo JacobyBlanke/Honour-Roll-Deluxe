@@ -3,6 +3,8 @@
 #include <conio.h>
 
 int main() {
+	
+
 	student test;
 	test.promptGrades();
 	ClassCollection cc;
