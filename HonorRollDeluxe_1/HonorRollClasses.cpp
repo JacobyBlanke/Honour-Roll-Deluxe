@@ -155,36 +155,44 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse) {
 
 #pragma region Class 
 
-Class::Class() {
-
+ClassCollection::ClassCollection() {
+    classFile.setPath("Classes.txt");
 }
 
-Class::Class(std::string name) {
+ClassCollection::ClassCollection(std::string name) {
     className = name;
+    classFile.setPath("Classes.txt");
 }
 
-Class::Class(std::vector<student> givenStudents) {
+ClassCollection::ClassCollection(std::vector<student> givenStudents) {
     students = givenStudents;
+    classFile.setPath("Classes.txt");
 }
 
-Class::Class(EasyFile file) {
+ClassCollection::ClassCollection(EasyFile file) {
     classFile = file;
 }
 
-Class::Class(std::string name, std::vector<student> givenStudents) {
-
+ClassCollection::ClassCollection(std::string name, std::vector<student> givenStudents) {
+    className = name;
+    students = givenStudents;
+    classFile.setPath("Classes.txt");
 }
 
-Class::Class(std::vector<student> givenStudents, EasyFile file) {
-
+ClassCollection::ClassCollection(std::vector<student> givenStudents, EasyFile file) {
+    students = givenStudents;
+    classFile = file;
 }
 
-Class::Class(std::string name, EasyFile file) {
-
+ClassCollection::ClassCollection(std::string name, EasyFile file) {
+    className = name;
+    classFile = file;
 }
 
-Class::Class(std::string name, std::vector<student> givenStudents, EasyFile file) {
-
+ClassCollection::ClassCollection(std::string name, std::vector<student> givenStudents, EasyFile file) {
+    className = name;
+    students = givenStudents;
+    classFile = file;
 }
 
 

@@ -13,7 +13,7 @@
 #include <math.h>
 #include "EasyFile.h"
 
-EasyFile Addresses("Classes.txt");
+
 
 class Course;
 
@@ -58,7 +58,7 @@ public:
 	friend std::ostream& operator<<(std::ostream&, const Course&); // Overloading the '<<' operator for printing.
 };
 
-class Class {
+class ClassCollection {
 private: 
 	// Contructable //
 	std::string className = "";
@@ -68,14 +68,14 @@ private:
 	bool readSuccessful = false;
 public: 
 	// Constructors //
-	Class();
-	Class(std::string);
-	Class(std::vector<student>);
-	Class(EasyFile);
-	Class(std::string, std::vector<student>);
-	Class(std::vector<student>, EasyFile);
-	Class(std::string, EasyFile);
-	Class(std::string, std::vector<student>, EasyFile);
+	ClassCollection();
+	ClassCollection(std::string);
+	ClassCollection(std::vector<student>);
+	ClassCollection(EasyFile);
+	ClassCollection(std::string, std::vector<student>);
+	ClassCollection(std::vector<student>, EasyFile);
+	ClassCollection(std::string, EasyFile);
+	ClassCollection(std::string, std::vector<student>, EasyFile);
 
 	// Methods //
 	void setPath(std::string);
