@@ -9,6 +9,8 @@
 #include <vector>
 #include <string_view>
 #include <sstream>
+#include <fstream>
+#include <string>
 
 const int MAX_COURSES = 8; // The maximum number of courses allowed
 const int MAX_SCORE = 120; // The maximum grade allowed
@@ -21,8 +23,35 @@ const int TABLE_SPACES = 25; // A constant used for table spaceing (CHANGING THI
 const int PASSING_AVG = 90; // The min grade average needed for passing 
 const int PASSING_COURSES = 5; // The min course number needed for passing
 
+void sort_classes() 
+{
+    std::ifstream infile("Classes.txt");
+    std::string line;
+    int count = 0, count2 = 0;
+    std::vector<std::vector<std::string>> data;
+    size_t pos;
+    while (std::getline(infile, line))
+    {
+        while ((pos = line.find(";")) != std::string::npos)
+        {
+            data[count][count2] = line.substr(0,line.find(";"));
+            line.erase(0, pos + 1); 
+            count2++;
+        }
+        count++;
+    }
 
-std::vector<std::string> getFullName() {
+    for (int i = 0; i < data.size(); i++) 
+    {
+        for (int j = 0; j < data[i].size(); j++)
+        {
+            std::cout << data[i][j] << std::endl;
+        }
+    }
+}
+
+std::vector<std::string> getFullName() 
+{
   std::string givenName = "", arr[2] = {"", ""}, tester, token;
   std::size_t pos;
   for (;;) {
@@ -39,11 +68,16 @@ std::vector<std::string> getFullName() {
   while(iss >> arr[i])
     i++;
     
+<<<<<<< HEAD
+  return std::vector<std::string>{arr[0], arr[1]};
+=======
 
   return std::vector<std::string>{arr[1], arr[0]};
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 }
 
-student::student() {
+student::student() 
+{
     srand((unsigned)time(0)); // Making the time unsigned avoids any glitchy problems
     std::vector<std::string> name = getFullName();
     if (name.size() == 1) { 
@@ -61,7 +95,12 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
+<<<<<<< HEAD
+void student::promptGrades() // Prompts the user for grades.
+{
+=======
 void student::promptGrades() { // Prompts the user for grades.
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
     while (!getValidInt(courseNum)) {
@@ -91,7 +130,8 @@ void student::promptGrades() { // Prompts the user for grades.
     update(); // Making sure everything is updated
 }
 
-void student::updateAverage() { // Updates the average to work with new values
+void student::updateAverage() // Updates the average to work with new values
+{
     int totalSum = 0; // The total sum of all the grades; used for averaging.
     for (Course i : courses) {
         totalSum += i.getGrade(); 
@@ -99,15 +139,18 @@ void student::updateAverage() { // Updates the average to work with new values
     average = round(static_cast<double>(totalSum) / courses.size()); // Calculating the rounded average. I like to use static_cast<double> rather than (double)
 }
 
-void student::updateEligibility() {
+void student::updateEligibility() 
+{
     isEligible = (average >= PASSING_AVG && courses.size() >= PASSING_COURSES && !hasDisciplineIssue); // Condition for determining Honor Roll
 }
 
-int student::getAvg() {
+int student::getAvg()
+{
     return average;
 }
 
-void student::update() {
+void student::update() 
+{
     updateAverage(); // Average must be updated prior to eligibility
     updateEligibility();
 }
@@ -122,8 +165,8 @@ std::string student::getSaveString() {
     return fin;
 }
 
-std::ostream& operator<<(std::ostream& output, const student& aStudent) {
-    
+std::ostream& operator<<(std::ostream& output, const student& aStudent) 
+{    
     output << "\n\t" << aStudent.fName << " " << aStudent.lName << "\n\nClass" << std::string(20, ' ') << "Grade\n"; // The name and table labels
     for (Course i : aStudent.courses) {
         std::cout << i; // Print each course
@@ -136,30 +179,40 @@ std::ostream& operator<<(std::ostream& output, const student& aStudent) {
 
 Course::Course() {}
 
-Course::Course(std::string name) {
+Course::Course(std::string name) 
+{
     courseName = name;
 }
-Course::Course(int avg) {
+Course::Course(int avg) 
+{
     grade = avg;
 }
-Course::Course(std::string name, int avg) {
+Course::Course(std::string name, int avg) 
+{
     courseName = name;
     grade = avg;
 }
 
-int Course::getGrade() {
+int Course::getGrade() 
+{
     return grade;
 }
 
+<<<<<<< HEAD
+void Course::setGrade(int newGrade) 
+{
+=======
 std::string Course::getName() {
     return courseName;
 }
 
 void Course::setGrade(int newGrade) {
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     grade = newGrade;
 }
 
-std::ostream& operator<<(std::ostream& output, const Course& aCourse) {
+std::ostream& operator<<(std::ostream& output, const Course& aCourse) 
+{
     output << aCourse.courseName << std::string(aCourse.courseName.length(), ' ') << aCourse.grade << std::endl; // Outputting the course data according to the spacing constant
     return output;
 }
@@ -167,6 +220,20 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse) {
 
 #pragma region Class 
 
+<<<<<<< HEAD
+Class::Class() 
+{
+
+}
+
+Class::Class(std::string name) 
+{
+    className = name;
+}
+
+Class::Class(std::vector<student> givenStudents) 
+{
+=======
 ClassCollection::ClassCollection() {
 }
 
@@ -175,11 +242,17 @@ ClassCollection::ClassCollection(std::string name) {
 }
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents) {
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     students = givenStudents;
 
 }
 
+<<<<<<< HEAD
+Class::Class(EasyFile file) 
+{
+=======
 ClassCollection::ClassCollection(EasyFile file) {
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     classFile = file;
 }
 
@@ -188,6 +261,21 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     students = givenStudents;
 }
 
+<<<<<<< HEAD
+Class::Class(std::vector<student> givenStudents, EasyFile file) 
+{
+
+}
+
+Class::Class(std::string name, EasyFile file) 
+{
+
+}
+
+Class::Class(std::string name, std::vector<student> givenStudents, EasyFile file) 
+{
+
+=======
 ClassCollection::ClassCollection(std::vector<student> givenStudents, EasyFile file) {
     students = givenStudents;
     classFile = file;
@@ -202,6 +290,7 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     className = name;
     students = givenStudents;
     classFile = file;
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 }
 
 void ClassCollection::setPath(std::string path) {
@@ -212,8 +301,12 @@ void ClassCollection::setFile(EasyFile file) {
     classFile = file;
 }
 
+<<<<<<< HEAD
+#pragma endregion
+=======
 void ClassCollection::addStudent(student s) {
     students.push_back(s);
     classFile.appendString(s.getSaveString());
 }
 #pragma endregion
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
