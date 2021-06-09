@@ -68,12 +68,10 @@ std::vector<std::string> getFullName()
   while(iss >> arr[i])
     i++;
     
-<<<<<<< HEAD
+
   return std::vector<std::string>{arr[0], arr[1]};
-=======
 
   return std::vector<std::string>{arr[1], arr[0]};
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 }
 
 student::student() 
@@ -95,12 +93,9 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
-<<<<<<< HEAD
 void student::promptGrades() // Prompts the user for grades.
 {
-=======
 void student::promptGrades() { // Prompts the user for grades.
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
     while (!getValidInt(courseNum)) {
@@ -198,16 +193,13 @@ int Course::getGrade()
     return grade;
 }
 
-<<<<<<< HEAD
 void Course::setGrade(int newGrade) 
 {
-=======
 std::string Course::getName() {
     return courseName;
 }
 
 void Course::setGrade(int newGrade) {
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     grade = newGrade;
 }
 
@@ -220,7 +212,6 @@ std::ostream& operator<<(std::ostream& output, const Course& aCourse)
 
 #pragma region Class 
 
-<<<<<<< HEAD
 Class::Class() 
 {
 
@@ -233,7 +224,6 @@ Class::Class(std::string name)
 
 Class::Class(std::vector<student> givenStudents) 
 {
-=======
 ClassCollection::ClassCollection() {
 }
 
@@ -242,17 +232,13 @@ ClassCollection::ClassCollection(std::string name) {
 }
 
 ClassCollection::ClassCollection(std::vector<student> givenStudents) {
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     students = givenStudents;
 
 }
 
-<<<<<<< HEAD
 Class::Class(EasyFile file) 
 {
-=======
 ClassCollection::ClassCollection(EasyFile file) {
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
     classFile = file;
 }
 
@@ -261,7 +247,6 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     students = givenStudents;
 }
 
-<<<<<<< HEAD
 Class::Class(std::vector<student> givenStudents, EasyFile file) 
 {
 
@@ -275,7 +260,6 @@ Class::Class(std::string name, EasyFile file)
 Class::Class(std::string name, std::vector<student> givenStudents, EasyFile file) 
 {
 
-=======
 ClassCollection::ClassCollection(std::vector<student> givenStudents, EasyFile file) {
     students = givenStudents;
     classFile = file;
@@ -290,7 +274,6 @@ ClassCollection::ClassCollection(std::string name, std::vector<student> givenStu
     className = name;
     students = givenStudents;
     classFile = file;
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 }
 
 void ClassCollection::setPath(std::string path) {
@@ -301,12 +284,9 @@ void ClassCollection::setFile(EasyFile file) {
     classFile = file;
 }
 
-<<<<<<< HEAD
 #pragma endregion
-=======
 void ClassCollection::addStudent(student s) {
     students.push_back(s);
     classFile.appendString(s.getSaveString());
 }
 #pragma endregion
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210

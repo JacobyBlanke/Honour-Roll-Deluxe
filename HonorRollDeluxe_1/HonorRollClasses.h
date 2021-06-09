@@ -13,11 +13,6 @@
 #include <math.h>
 #include "EasyFile.h"
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 class Course;
 
 class student
