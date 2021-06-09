@@ -9,12 +9,15 @@
 #include <time.h>
 #include <algorithm>
 #include <vector>
-#include <conio.h>
+#include <ncurses.h>
 #include <math.h>
 #include "EasyFile.h"
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 822b0e9e41a366e0e76894e39c2781d38518d210
 class Course;
 
 class student
@@ -31,6 +34,7 @@ private:
 public:
   student();
   student(std::string, std::string);
+  void sort_classes();
   void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
 	void updateAverage(); // Updates the average to match current grades.
 	void updateEligibility(); // Updates the eligibility for Honor Roll
