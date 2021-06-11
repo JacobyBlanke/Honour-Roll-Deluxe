@@ -52,12 +52,12 @@ void build_student()
          count++;
      }
     }
-    std::vector<Course> courses;
-    for (int i = 4; i < (data.size - 4 ); i++)
+    /*std::vector<Course> courses;
+    for (int i = 4; i < (data.size() - 4 ); i++)
     {
-      courses[i] = new Course(data[0][i], data[0][i+1]);
+      courses.push_back(new Course(data[0][i], data[0][i+1]));
     }
-    student person = new student(data[0][0], data[0][1], data[0][2], data[0][3], courses);
+    student person = new student(data[0][0], data[0][1], std::stoi(data[0][2]), data[0][3], courses);*/
 
 }
 
