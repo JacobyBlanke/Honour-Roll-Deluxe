@@ -1,9 +1,10 @@
-/**  
-  * Name: Jacoby Blanke
-  * Program Name: Honor Roll
-  * Date: 02/07/2021
-  * Extra: N/A
-  */
+/**
+  * Names: Jacoby Blanke and Alexei Korolev
+  * Program Name: Honour Roll Deluxe
+  * Date: 06/11/2021
+  * Known Issues: Code is incomplete. All basic requirements are met, but none of the deluxe requirements are yet fulfilled.
+  */ 
+
 #include <string>
 #include <iostream>
 #include <time.h>
