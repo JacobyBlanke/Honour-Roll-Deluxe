@@ -25,20 +25,30 @@ const int PASSING_COURSES = 5; // The min course number needed for passing
 
 void sort_classes() 
 {
-    std::ifstream infile("Classes.txt");
+    std::ifstream infileClass("Classes.txt");
     std::string line;
     int count = 0, count2 = 0;
     std::vector<std::vector<std::string>> data;
     size_t pos;
-    while (std::getline(infile, line))
+    std::vector<std::string> classesLocations;
+    while (std::getline(infileClass, line))
     {
-        while ((pos = line.find(";")) != std::string::npos)
-        {
-            data[count][count2] = line.substr(0,line.find(";"));
-            line.erase(0, pos + 1); 
-            count2++;
-        }
-        count++;
+        classesLocations = line;
+    }
+  
+    for (int i = 0; i < classesLocations.size(); i++) 
+    {
+     std::ifstream infile(classesLocations[i]);
+     while (std::getline(infile, line))
+     {
+         while ((pos = line.find(";")) != std::string::npos)
+         {
+             data[count][count2] = line.substr(0,line.find(";"));
+             line.erase(0, pos + 1); 
+             count2++;
+         }
+         count++;
+     }
     }
 
     for (int i = 0; i < data.size(); i++) 
