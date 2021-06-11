@@ -40,6 +40,7 @@ public:
     Menu(std::vector<std::string>, std::string);
     std::vector<std::string> options; // All the options
     std::string prompt = "";
+    int currentSelected = 0;
     int getSelectedOption(); // Returns the index of the option.
 };
 
