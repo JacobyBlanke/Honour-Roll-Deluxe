@@ -28,18 +28,19 @@ void sort_classes()
 {
     std::ifstream infileClass("Classes.txt");
     std::string line;
-    int count = 0, count2 = 0;
+    int count = 0, count2 = 0, count3 = 0;
     std::vector<std::vector<std::string>> data;
     size_t pos;
     std::vector<std::string> classesLocations;
     while (std::getline(infileClass, line))
     {
-        classesLocations = line;
+        classesLocations[count3] = line;
+        count3++;
     }
   
     for (int i = 0; i < classesLocations.size(); i++) 
     {
-     std::ifstream infile(classesLocations[i]);
+     std::ifstream infile(classesLocations[i] + ".txt");
      while (std::getline(infile, line))
      {
          while ((pos = line.find(";")) != std::string::npos)
