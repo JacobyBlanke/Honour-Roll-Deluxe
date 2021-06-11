@@ -34,7 +34,7 @@ void sort_classes()
     std::vector<std::string> classesLocations;
     while (std::getline(infileClass, line))
     {
-        classesLocations[count3] = line;
+        classesLocations.push_back(line);
         count3++;
     }
   
