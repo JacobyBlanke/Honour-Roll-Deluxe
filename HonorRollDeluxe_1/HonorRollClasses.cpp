@@ -3,7 +3,7 @@
   * Program Name: Honour Roll Deluxe
   * Date: 06/11/2021
   * Known Issues: Code is incomplete. All basic requirements are met, but none of the deluxe requirements are yet fulfilled.
-  */ 
+  */
 
 #include "HonorRollClasses.h"
 #include "GetData.h"
@@ -21,10 +21,10 @@ const int COURSE_NAME_LIMIT = 20; // Limit in characters for the course name
 const int DISIPLINARY_CHANCE = 5; // The chance in percent for a disciplinary issue to arise.
 const int TABLE_SPACES = 25; // A constant used for table spaceing (CHANGING THIS WILL SCREW UP OUTPUT)
 
-const int PASSING_AVG = 90; // The min grade average needed for passing 
+const int PASSING_AVG = 90; // The min grade average needed for passing
 const int PASSING_COURSES = 5; // The min course number needed for passing
 
-void sort_classes() 
+void build_student()
 {
     std::ifstream infileClass("Classes.txt");
     std::string line;
@@ -37,8 +37,8 @@ void sort_classes()
         classesLocations.push_back(line);
         count3++;
     }
-  
-    for (int i = 0; i < classesLocations.size(); i++) 
+
+    for (int i = 0; i < classesLocations.size(); i++)
     {
      std::ifstream infile(classesLocations[i] + ".txt");
      while (std::getline(infile, line))
@@ -46,14 +46,14 @@ void sort_classes()
          while ((pos = line.find(";")) != std::string::npos)
          {
              data[count][count2] = line.substr(0,line.find(";"));
-             line.erase(0, pos + 1); 
+             line.erase(0, pos + 1);
              count2++;
          }
          count++;
      }
     }
 
-    for (int i = 0; i < data.size(); i++) 
+    for (int i = 0; i < data.size(); i++)
     {
         for (int j = 0; j < data[i].size(); j++)
         {
@@ -62,7 +62,7 @@ void sort_classes()
     }
 }
 
-std::vector<std::string> getFullName() 
+std::vector<std::string> getFullName()
 {
   std::string givenName = "", arr[2] = {"", ""}, tester, token;
   std::size_t pos;
@@ -73,21 +73,21 @@ std::vector<std::string> getFullName()
       break;
     std::cout << "\nInvalid name. Please have more than 1 character.\n" << std::endl;
   }
-   
+
 
   std::istringstream iss(givenName, std::istringstream::in);
   int i = 0;
   while(iss >> arr[i])
     i++;
-    
+
   return std::vector<std::string>{arr[1], arr[0]};
 }
 
-student::student() 
+student::student()
 {
     srand((unsigned)time(0)); // Making the time unsigned avoids any glitchy problems
     std::vector<std::string> name = getFullName();
-    if (name.size() == 1) { 
+    if (name.size() == 1) {
         lName = name.at(0); // If there is 1 name, assign it as a last name
     }
     else {
@@ -137,12 +137,12 @@ void student::updateAverage() // Updates the average to work with new values
 {
     int totalSum = 0; // The total sum of all the grades; used for averaging.
     for (Course i : courses) {
-        totalSum += i.getGrade(); 
+        totalSum += i.getGrade();
     }
     average = round(static_cast<double>(totalSum) / courses.size()); // Calculating the rounded average. I like to use static_cast<double> rather than (double)
 }
 
-void student::updateEligibility() 
+void student::updateEligibility()
 {
     isEligible = (average >= PASSING_AVG && courses.size() >= PASSING_COURSES && !hasDisciplineIssue); // Condition for determining Honor Roll
 }
@@ -152,7 +152,7 @@ int student::getAvg()
     return average;
 }
 
-void student::update() 
+void student::update()
 {
     updateAverage(); // Average must be updated prior to eligibility
     updateEligibility();
@@ -168,8 +168,8 @@ std::string student::getSaveString() {
     return fin;
 }
 
-std::ostream& operator<<(std::ostream& output, const student& aStudent) 
-{    
+std::ostream& operator<<(std::ostream& output, const student& aStudent)
+{
     output << "\n\t" << aStudent.fName << " " << aStudent.lName << "\n\nClass" << std::string(20, ' ') << "Grade\n"; // The name and table labels
     for (Course i : aStudent.courses) {
         std::cout << i; // Print each course
@@ -182,21 +182,21 @@ std::ostream& operator<<(std::ostream& output, const student& aStudent)
 
 Course::Course() {}
 
-Course::Course(std::string name) 
+Course::Course(std::string name)
 {
     courseName = name;
 }
-Course::Course(int avg) 
+Course::Course(int avg)
 {
     grade = avg;
 }
-Course::Course(std::string name, int avg) 
+Course::Course(std::string name, int avg)
 {
     courseName = name;
     grade = avg;
 }
 
-int Course::getGrade() 
+int Course::getGrade()
 {
     return grade;
 }
@@ -210,14 +210,14 @@ void Course::setGrade(int newGrade) {
     grade = newGrade;
 }
 
-std::ostream& operator<<(std::ostream& output, const Course& aCourse) 
+std::ostream& operator<<(std::ostream& output, const Course& aCourse)
 {
     output << aCourse.courseName << std::string(aCourse.courseName.length(), ' ') << aCourse.grade << std::endl; // Outputting the course data according to the spacing constant
     return output;
 }
 #pragma endregion
 
-#pragma region Class 
+#pragma region Class
 
 ClassCollection::ClassCollection()
 {
