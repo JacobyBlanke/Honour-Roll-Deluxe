@@ -102,6 +102,14 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
+student::student(std::string firstName, std::string lastName, int avgGrade, bool disciplineInfraction, std::vector<Course> classesNamesAndGrades)
+{
+  fName = firstName;
+  lName = lastName;
+  bool hasDisciplineIssue = disciplineInfraction;
+  int average = avgGrade;
+  courses = classesNamesAndGrades;
+}
 
 void student::promptGrades() { // Prompts the user for grades.
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";

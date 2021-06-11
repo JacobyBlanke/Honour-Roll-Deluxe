@@ -24,14 +24,13 @@ private:
     bool hasDisciplineIssue = false;
     std::vector<Course> courses;
     int average = 0;
-    double gpa = 0.0;
 
     // Non-constructable //
     bool isEligible = false;
 public:
     student();
     student(std::string, std::string);
-    student(std::string, std::string, double, bool); //firstname, lastname, total average, disciplinary infraction.
+    student(std::string, std::string, int, bool, std::vector<std::string>, std::vector<int>); //firstname, lastname, total average, disciplinary infraction.
     void sort_classes();
     void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
     void updateAverage(); // Updates the average to match current grades.
@@ -47,7 +46,6 @@ private:
     // Constructable //
     std::string courseName = "";
     int grade = 0;
- 
 
 public:
     // Constructors //
