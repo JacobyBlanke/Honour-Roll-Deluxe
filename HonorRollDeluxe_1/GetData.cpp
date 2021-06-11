@@ -143,6 +143,6 @@ Menu::Menu(std::vector<std::string> givenOptions, std::string givenPrompt) {
 }
 
 int Menu::getSelectedOption() {
-	std::string printData;
-	return 1;
+	std::string printData = "";
+	
 }
