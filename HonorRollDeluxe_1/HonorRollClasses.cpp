@@ -52,14 +52,13 @@ void build_student()
          count++;
      }
     }
-
-    for (int i = 0; i < data.size(); i++)
+    std::vector<Course> courses;
+    for (int i = 4; i < (data.size - 4 ); i++)
     {
-        for (int j = 0; j < data[i].size(); j++)
-        {
-            std::cout << data[i][j] << std::endl;
-        }
+      courses[i] = new Course(data[0][i], data[0][i+1]);
     }
+    student person = new student(data[0][0], data[0][1], data[0][2], data[0][3], courses);
+
 }
 
 std::vector<std::string> getFullName()
