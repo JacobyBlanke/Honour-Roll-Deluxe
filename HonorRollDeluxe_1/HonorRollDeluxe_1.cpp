@@ -8,9 +8,14 @@
 #include "HonorRollClasses.h"
 #include <conio.h>
 
-int main() {
-	
 
+#include "GetData.h"
+int main() {
+	std::vector<std::string> o{"Option 1", "Option 2", "Option 3"};
+
+	Menu m(o, "Select an option: \n"); 
+	std::cout<< m.getSelectedOption();
+	
 	student test;
 	test.promptGrades();
 	ClassCollection cc;

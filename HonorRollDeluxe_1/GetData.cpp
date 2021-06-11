@@ -8,6 +8,7 @@
 
 #include "GetData.h"
 
+
 using std::cin;
 using std::cout;
 
@@ -143,6 +144,29 @@ Menu::Menu(std::vector<std::string> givenOptions, std::string givenPrompt) {
 }
 
 int Menu::getSelectedOption() {
-	std::string printData = "";
 	
+	char enteredChar = 'a';
+	do {
+		std::string printData = "";
+		std::cout << "\033[2J\033[1;1H";
+		//std::cout << '\b' << std::string(50, '\n');
+		printData += prompt;
+		for (int i = 0; i < options.size(); i++) {
+			if (i == currentSelected) {
+				printData += " X " + options[i] + " X \n";
+			}
+			else {
+				printData += " O " + options[i] + " O \n";
+			}
+		}
+		std::cout << printData;
+		enteredChar = (_getch());
+		if (std::tolower(enteredChar) == 'w') {
+			currentSelected = std::max(0, --currentSelected);
+		}
+		else if (std::tolower(enteredChar) == 's') {
+			currentSelected = std::min((long)options.size() - 1, (long)++currentSelected);
+		}
+	} while (!std::isspace(enteredChar));
+	return currentSelected;
 }
