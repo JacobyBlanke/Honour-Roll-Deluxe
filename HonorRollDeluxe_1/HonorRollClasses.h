@@ -27,10 +27,10 @@ private:
 	// Non-constructable //
 	bool isEligible = false;
 public:
-  student();
-  student(std::string, std::string);
-  void sort_classes();
-  void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
+	student();
+	student(std::string, std::string);
+	void sort_classes();
+	void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
 	void updateAverage(); // Updates the average to match current grades.
 	void updateEligibility(); // Updates the eligibility for Honor Roll
 	void update(); // Updates the entire class
@@ -68,7 +68,7 @@ private:
 	EasyFile classFile;
 	// ---- File Structure ---- //
 	/*
-		FName;LName;Total_Avg;Disp_Infraction[Y or N];Class1;Grade;Class2;Grade;Class3;Grade... 
+		FName;LName;Total_Avg;GPA;Disp_Infraction[Y or N];Class1;Grade;Class2;Grade;Class3;Grade... 
 	*/
 
 	// Unconstructable //
