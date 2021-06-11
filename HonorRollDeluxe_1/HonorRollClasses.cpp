@@ -108,6 +108,7 @@ student::student(std::string firstName, std::string lastName, int avgGrade, bool
   lName = lastName;
   bool hasDisciplineIssue = disciplineInfraction;
   int average = avgGrade;
+  courses = classesNamesAndGrades;
 }
 
 void student::promptGrades() { // Prompts the user for grades.
