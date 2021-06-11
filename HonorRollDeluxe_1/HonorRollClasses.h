@@ -30,7 +30,7 @@ private:
 public:
     student();
     student(std::string, std::string);
-    student(std::string, std::string, double, boolean); //firstname, lastname, total average, disciplinary infraction.
+    student(std::string, std::string, double, boolean, std::vector<std::string>, std::vector<int>); //firstname, lastname, total average, disciplinary infraction.
     void sort_classes();
     void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
     void updateAverage(); // Updates the average to match current grades.
