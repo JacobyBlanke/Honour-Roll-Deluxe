@@ -26,6 +26,7 @@ private:
     int average = 0;
 
     // Non-constructable //
+    double gpa = 0;
     bool isEligible = false;
 public:
     student();
@@ -37,6 +38,9 @@ public:
     void updateEligibility(); // Updates the eligibility for Honor Roll
     void update(); // Updates the entire class
     int getAvg(); // Returns the current student's average
+    double getGpa(); // Returns the GPA
+    std::string getlName(); // Returns the first name
+    std::string getfName(); // Returns the last name
     void setfName(std::string); // Sets the first name
     void setlName(std::string); // Sets the last name
     std::string getSaveString(); // Returns the student's data in a string for saving.
@@ -95,9 +99,9 @@ public:
     void removeStudent(student);
     bool readData(); // Reads the data from the classFile
     void fullReport(); // Displays the full report.
-    void fullStudentReport(); // Displays the full report for a specific student.
+    bool fullStudentReport(); // Displays the full report for a specific student. Returns true if successful and false if not.
     void gpaReport(); // Displays the gpa report.
-    void gpaStudentReport(); // Displays the gpa report for a specific student.
+    bool gpaStudentReport(); // Displays the gpa report for a specific student. Returns true if successful and false if not.
     void disciplinaryReport(); // Displays the disciplinary infractions of all students.
 
 };

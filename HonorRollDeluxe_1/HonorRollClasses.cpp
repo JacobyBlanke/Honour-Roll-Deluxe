@@ -122,8 +122,8 @@ student::student(std::string firstName, std::string lastName, int avgGrade, bool
 {
   fName = firstName;
   lName = lastName;
-  bool hasDisciplineIssue = disciplineInfraction;
-  int average = avgGrade;
+  hasDisciplineIssue = disciplineInfraction;
+  average = avgGrade;
   courses = classesNamesAndGrades; 
 }
 
@@ -162,6 +162,7 @@ void student::updateAverage() // Updates the average to work with new values
         totalSum += i.getGrade();
     }
     average = round(static_cast<double>(totalSum) / courses.size()); // Calculating the rounded average. I like to use static_cast<double> rather than (double)
+    gpa = round(10.0 * average / 25) / 10.0;
 }
 
 void student::updateEligibility()
@@ -172,6 +173,18 @@ void student::updateEligibility()
 int student::getAvg()
 {
     return average;
+}
+
+std::string student::getlName() {
+    return lName;
+}
+
+std::string student::getfName() {
+    return fName;
+}
+
+double student::getGpa() {
+    return gpa;
 }
 
 void student::setfName(std::string newName) {
@@ -191,6 +204,7 @@ void student::update()
 std::string student::getSaveString() {
     std::string fin = fName + "\n" + lName + "\n" + std::to_string(average) + "\n";
     (hasDisciplineIssue) ? fin += "Y\n" : fin += "N\n";
+    fin += std::to_string(courses.size()) + "\n";
     for (Course i : courses) {
         fin += i.getName() + "\n" + std::to_string(i.getGrade()) + "\n";
     }
@@ -199,7 +213,7 @@ std::string student::getSaveString() {
 
 std::ostream& operator<<(std::ostream& output, const student& aStudent)
 {
-    output << "\n\t" << aStudent.fName << " " << aStudent.lName << "\n\nClass" << std::string(20, ' ') << "Grade\n"; // The name and table labels
+    output << "\n\t" << aStudent.fName << " " << aStudent.lName << "\n\nClass" << std::string(TABLE_SPACES - 5, ' ') << "Grade\n"; // The name and table labels
     for (Course i : aStudent.courses) {
         std::cout << i; // Print each course
     }
@@ -236,7 +250,7 @@ std::string Course::getName() {
 
 std::ostream& operator<<(std::ostream& output, const Course& aCourse)
 {
-    output << aCourse.courseName << std::string(aCourse.courseName.length(), ' ') << aCourse.grade << std::endl; // Outputting the course data according to the spacing constant
+    output << aCourse.courseName << std::string(TABLE_SPACES - aCourse.courseName.length(), ' ') << aCourse.grade << std::endl; // Outputting the course data according to the spacing constant
     return output;
 }
 #pragma endregion
@@ -302,7 +316,7 @@ bool ClassCollection::readData() {
     if (classFile.hasFile()) {
         classFile.readFile();
         std::string currentLine = classFile.nextLine();
-        while (currentLine != "CODE:EOF" && (classFile.getCursor() - classFile.size()) > 5) {
+        while (currentLine != "CODE:EOF" && abs(classFile.getCursor() - classFile.size()) > 5) {
             try {
                 std::string fName = currentLine;
                 std::string lName = classFile.nextLine();
@@ -317,6 +331,7 @@ bool ClassCollection::readData() {
                     foundCourses.push_back(newCourse);
                 }
                 student newStudent(fName, lName, avg, issue, foundCourses);
+                newStudent.update();
                 students.push_back(newStudent);
                 currentLine = classFile.nextLine();
             }
@@ -331,4 +346,26 @@ bool ClassCollection::readData() {
         return false;
     }
 }
+
+void ClassCollection::fullReport() {
+    std::vector<student> sortCopy = students; // Copying the students vector in order to not accidentally mutate the orignal.
+    bool flag = true;
+    while (flag) { // Sorting the students alphabetically.
+        flag = false;
+        for (int i = 1; i < sortCopy.size(); i++) {
+            if (sortCopy[i - 1].getlName().compare(sortCopy[i].getlName()) > 0) { // Alphabetical logic.
+                student temp = sortCopy[i - 1];
+                sortCopy[i - 1] = sortCopy[i];
+                sortCopy[i] = temp;
+                flag = true;
+            }
+        }
+    }
+    for (student i : sortCopy) {
+        std::cout << i;
+    }
+    std::cout << "\nPress any key to continue: "; 
+    _getch(); // A way of pausing.
+}
+
 #pragma endregion
