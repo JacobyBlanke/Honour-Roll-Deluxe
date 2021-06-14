@@ -144,16 +144,13 @@ Menu::Menu(std::vector<std::string> givenOptions, std::string givenPrompt) {
 }
 
 int Menu::getSelectedOption() {
-	
 	char enteredChar = 'a';
 	do {
 		std::string printData = "";
-		std::cout << "\033[2J\033[1;1H";
-		//std::cout << '\b' << std::string(50, '\n');
 		printData += prompt;
 		for (int i = 0; i < options.size(); i++) {
 			if (i == currentSelected) {
-				printData += " X " + options[i] + " X \n";
+				printData += " # " + options[i] + " # \n";
 			}
 			else {
 				printData += " O " + options[i] + " O \n";
@@ -167,6 +164,7 @@ int Menu::getSelectedOption() {
 		else if (std::tolower(enteredChar) == 's') {
 			currentSelected = std::min((long)options.size() - 1, (long)++currentSelected);
 		}
+		std::cout << "\033[2J\033[1;1H";
 	} while (!std::isspace(enteredChar));
 	return currentSelected;
 }

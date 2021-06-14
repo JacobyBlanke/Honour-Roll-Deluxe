@@ -63,23 +63,40 @@ void build_student()
 
 std::vector<std::string> getFullName()
 {
-  std::string givenName = "", arr[2] = {"", ""}, tester, token;
-  std::size_t pos;
-  for (;;) {
-    std::cout << "Please enter your full name: ";
-    getline(std::cin, givenName);
-    if (givenName.length() > 1)
-      break;
-    std::cout << "\nInvalid name. Please have more than 1 character.\n" << std::endl;
-  }
-
-
-  std::istringstream iss(givenName, std::istringstream::in);
-  int i = 0;
-  while(iss >> arr[i])
-    i++;
-
-  return std::vector<std::string>{arr[1], arr[0]};
+    std::string givenName = "", arr[2] = { "", "" }, tester, token;
+    std::size_t pos;
+    for (;;) {
+        std::cout << "Please enter your full name: ";
+        getline(std::cin, givenName);
+        if (givenName.length() > 0)
+            break;
+        std::cout << "\nInvalid name. Please have 1 or more character.\n" << std::endl;
+    }
+    std::vector<std::string> splitName;
+    std::string curSeg = "";
+    for (char i : givenName) {
+        if (!isspace(i)) {
+            curSeg += i;
+        }
+        else if (curSeg != "") {
+            splitName.push_back(curSeg);
+            curSeg = "";
+        }
+    }
+    if (curSeg != "")
+        splitName.push_back(curSeg);
+    /*std::istringstream iss(givenName, std::istringstream::in);
+    int i = 0;
+    while (iss >> arr[i])
+        i++;
+    if (arr[0] == "") {
+        arr[0] = arr[1];
+        arr[1] = "";
+    }*/
+    if (splitName.size() > 1)
+        return std::vector<std::string>{splitName[splitName.size() - 1], splitName[0]};
+    else
+        return std::vector<std::string>{splitName[0]};
 }
 
 student::student()
@@ -107,31 +124,29 @@ student::student(std::string firstName, std::string lastName, int avgGrade, bool
   lName = lastName;
   bool hasDisciplineIssue = disciplineInfraction;
   int average = avgGrade;
-  courses = classesNamesAndGrades;
+  courses = classesNamesAndGrades; 
 }
 
 void student::promptGrades() { // Prompts the user for grades.
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
-    while (!getValidInt(courseNum)) {
-      std::cout << "\n\tInvalid. Make sure it is between " + std::to_string(MIN_COURSES) + " and " + std::to_string(MAX_COURSES) + " inclusevely\n";
+    while (!getValidInt(courseNum) || courseNum < MIN_COURSES || courseNum > MAX_COURSES) {
+      std::cout << "\n\tInvalid. Make sure it is between " + std::to_string(MIN_COURSES) + " and " + std::to_string(MAX_COURSES) + " inclusevely: ";
     }
     for (int i = 0; i < courseNum; i++) {
       std::string courseName = "";
       std::cout << "Enter the name of course " + std::to_string(i+1) + " (1 - " + std::to_string(COURSE_NAME_LIMIT) + " characters): ";
       getline(std::cin, courseName);
-      std::remove_if(courseName.begin(), courseName.end(), isspace);
       while (courseName.length() < 1) {
         std::cout << "\n\tInvalid. Please enter a valid name: ";
         getline(std::cin, courseName);
-        std::remove_if(courseName.begin(), courseName.end(), isspace);
       }
       if (courseName.length() > COURSE_NAME_LIMIT) {
         courseName = courseName.substr(0, 20); // Clipping the name to COURSE_NAME_LIMIT characters
       }
       std::cout << "Please enter the average for " + courseName + " (" + std::to_string(MIN_SCORE) + " - " + std::to_string(MAX_SCORE) + "): ";
       int courseAvg = 0;
-      while (!getValidInt(courseAvg)) {
+      while (!getValidInt(courseAvg) || courseAvg < MIN_SCORE || courseAvg > MAX_SCORE) {
         std::cout << "\n\tInvalid. Please keep the average between " + std::to_string(MIN_SCORE) + " and " + std::to_string(MAX_SCORE) + ": ";
       }
       Course newCourse = Course(courseName, courseAvg); // Making a new course obj to store the data
@@ -159,6 +174,14 @@ int student::getAvg()
     return average;
 }
 
+void student::setfName(std::string newName) {
+    fName = newName;
+}
+
+void student::setlName(std::string newName) {
+    lName = newName;
+}
+
 void student::update()
 {
     updateAverage(); // Average must be updated prior to eligibility
@@ -166,12 +189,11 @@ void student::update()
 }
 
 std::string student::getSaveString() {
-    std::string fin = fName + ";" + lName + ";" + std::to_string(average) + ";";
-    (hasDisciplineIssue) ? fin += "Y;" : fin += "N;";
+    std::string fin = fName + "\n" + lName + "\n" + std::to_string(average) + "\n";
+    (hasDisciplineIssue) ? fin += "Y\n" : fin += "N\n";
     for (Course i : courses) {
-        fin += i.getName() + ";" + std::to_string(i.getGrade());
+        fin += i.getName() + "\n" + std::to_string(i.getGrade()) + "\n";
     }
-    fin += "\n";
     return fin;
 }
 
@@ -208,13 +230,8 @@ int Course::getGrade()
     return grade;
 }
 
-
 std::string Course::getName() {
     return courseName;
-}
-
-void Course::setGrade(int newGrade) {
-    grade = newGrade;
 }
 
 std::ostream& operator<<(std::ostream& output, const Course& aCourse)
@@ -279,5 +296,39 @@ void ClassCollection::setFile(EasyFile file) {
 void ClassCollection::addStudent(student s) {
     students.push_back(s);
     classFile.appendString(s.getSaveString());
+}
+
+bool ClassCollection::readData() {
+    if (classFile.hasFile()) {
+        classFile.readFile();
+        std::string currentLine = classFile.nextLine();
+        while (currentLine != "CODE:EOF" && (classFile.getCursor() - classFile.size()) > 5) {
+            try {
+                std::string fName = currentLine;
+                std::string lName = classFile.nextLine();
+                int avg = stoi(classFile.nextLine());
+                bool issue = (classFile.nextLine()[0] == 'Y') ? true : false;
+                int courseNum = stoi(classFile.nextLine());
+                std::vector<Course> foundCourses;
+                for (int i = 0; i < courseNum; i++) {
+                    std::string courseName = classFile.nextLine();
+                    int courseGrade = stoi(classFile.nextLine());
+                    Course newCourse(courseName, courseGrade);
+                    foundCourses.push_back(newCourse);
+                }
+                student newStudent(fName, lName, avg, issue, foundCourses);
+                students.push_back(newStudent);
+                currentLine = classFile.nextLine();
+            }
+            catch (...) {
+                std::cout << "An error occured when reading file data. The file may be corrupted or incomplete.";
+                return false;
+            }
+        }
+    }
+    else {
+        std::cout << "No file detected.";
+        return false;
+    }
 }
 #pragma endregion

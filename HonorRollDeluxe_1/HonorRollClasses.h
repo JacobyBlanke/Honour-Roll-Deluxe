@@ -37,6 +37,8 @@ public:
     void updateEligibility(); // Updates the eligibility for Honor Roll
     void update(); // Updates the entire class
     int getAvg(); // Returns the current student's average
+    void setfName(std::string); // Sets the first name
+    void setlName(std::string); // Sets the last name
     std::string getSaveString(); // Returns the student's data in a string for saving.
   friend std::ostream& operator<<(std::ostream&, const student&);
 };
@@ -88,8 +90,14 @@ public:
 
     // Methods //
     void setPath(std::string);
-    void setFile(EasyFile);
+    void setFile(EasyFile); // Sets the classFile to the givenFile.
     void addStudent(student);
     void removeStudent(student);
-    bool readData();
+    bool readData(); // Reads the data from the classFile
+    void fullReport(); // Displays the full report.
+    void fullStudentReport(); // Displays the full report for a specific student.
+    void gpaReport(); // Displays the gpa report.
+    void gpaStudentReport(); // Displays the gpa report for a specific student.
+    void disciplinaryReport(); // Displays the disciplinary infractions of all students.
+
 };

@@ -48,6 +48,10 @@ std::string EasyFile::nextLine() {
 	}
 }
 
+std::vector<std::string> EasyFile::getFileData() {
+	return lines;
+}
+
 void EasyFile::setCursor(int newPos) {
 	cursor = newPos;
 }
@@ -75,6 +79,10 @@ void EasyFile::incrementCursor(int amount) {
 	}
 }
 
+int EasyFile::getCursor() {
+	return cursor;
+}
+
 int EasyFile::size() {
 	if (read) {
 		return lines.size();
@@ -91,6 +99,15 @@ void EasyFile::appendString(std::string addition) {
 	}
 	catch (...) {
 		std::cout << "Exception handled: EasyFile(\"" << path << "\"\n";
+	}
+}
+
+bool EasyFile::hasFile() {
+	if (path == "") {
+		return false;
+	}
+	else {
+		return true;
 	}
 }
 

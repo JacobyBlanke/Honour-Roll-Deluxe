@@ -27,12 +27,15 @@ public:
     // Read methods //
     bool readFile(); // Reads the file at the filepath.
     std::string nextLine(); // Gets the next line.
+    std::vector<std::string> getFileData(); // Returns the enture vector of information.
     void setCursor(int); // Sets the cursor to a position
     void resetCursor(); // Resets the cursor to 0
     void decrementCursor(); // Decrements by 1
     void decrementCursor(int); // Decrements by x
     void incrementCursor(); // Increments by 1
     void incrementCursor(int); // Increments by x
+    int getCursor(); // Returns the cursor.
+    bool hasFile();
     int size();
 
     // Write methods //
