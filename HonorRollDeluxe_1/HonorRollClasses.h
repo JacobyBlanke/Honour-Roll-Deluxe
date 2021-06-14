@@ -99,7 +99,7 @@ public:
     void removeStudent(student);
     bool readData(); // Reads the data from the classFile
     void fullReport(); // Displays the full report.
-    bool fullStudentReport(); // Displays the full report for a specific student. Returns true if successful and false if not.
+    bool fullStudentReport(std::string); // Displays the full report for a specific student. Returns true if successful and false if not.
     void gpaReport(); // Displays the gpa report.
     bool gpaStudentReport(); // Displays the gpa report for a specific student. Returns true if successful and false if not.
     void disciplinaryReport(); // Displays the disciplinary infractions of all students.

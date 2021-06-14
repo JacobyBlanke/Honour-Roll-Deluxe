@@ -34,8 +34,6 @@ int main() {
 		optionsList.push_back("Add a class");
 		Menu m(optionsList, "\t\tWelcome to the Honor Roll Deluxe Version!\n\n Instructions on use : \n\t->Menus: Use 'W' and 'S' to modify your selection and then SPACE or ENTER to confirm.\n\t->Classes: If you create a new class, then the information from the previous classes will be inaccessible when working with that class.\n\t->Naming a class \"CODE:EOF\" will result in a corrupt file.\n\nSelect a class to continue: \n"); // File selection menu.
 		int option = m.getSelectedOption();
-		optionsList = { "Yes", "No" };
-		Menu yn(optionsList, "Would you like to add a new student? (y to add a new student): \n"); // A menu for yn applications.
 		if (option == optionsList.size() - 1) {
 			std::cout << "Enter class name: ";
 			std::string className;
@@ -47,8 +45,10 @@ int main() {
 			classList.appendString("\n" + className);
 			continue;
 		}
-		EasyFile chosenFile(optionsList[m.getSelectedOption()] + ".txt");
+		EasyFile chosenFile(optionsList[option] + ".txt");
 		ClassCollection currentClass(chosenFile);
+		optionsList = { "Yes", "No" };
+		Menu yn(optionsList, "Would you like to add a new student? (y to add a new student): \n"); // A menu for yn applications.
 		if (currentClass.readData()) {
 			do {
 				optionsList = { "Enter Student Data", "Enter Admin Mode", "Run Reports", "Exit Program" };
@@ -74,16 +74,40 @@ int main() {
 				}
 				else if (option == 2) {
 					do {
+						yn.prompt = "Continue Running Reports? \n"; // Changing the prompt to fit the scenario.
 						m.options = { "A. Run Full Honor Roll Report", "B. Honor Roll Report for 1 Student", "C. Full GPA Report", "D. GPA Report for 1 Student.", "E. Disciplinary Infractions Report" };
 						m.prompt = "Select your desired report: \n";
 						option = m.getSelectedOption();
 						if (option == 0) {
 							currentClass.fullReport(); // Run the full report if the option is chosen.
 						}
+						
 						else if (option == 1) {
-							if (!currentClass.fullStudentReport()) {
-
-							}
+							do {
+								std::cout << "\n\tPlease enter the lastname of the student: ";
+								std::string name = "";
+								getline(std::cin, name);
+								if (!currentClass.fullStudentReport(name)) {
+									m.options = { "Back to Reports Menu", "Try again", "Quit" };
+									m.prompt = "Student not found. How would you like to proceed?\n";
+								}
+								else {
+									m.options = { "Back to Reports Menu", "Enter another student", "Quit" };
+									m.prompt = "How would you like to proceed?\n";
+								}
+								std::cout << "\033[2J\033[1;1H";
+								option = m.getSelectedOption();
+								if (option == 0) { // Logic for the three options.
+									break;
+								}
+								else if (option == 1) {
+									continue;
+								}
+								else {
+									exit(0);
+								}
+							} while (true);
+							
 						}
 					} while (yn.getSelectedOption() == 0);
 				}

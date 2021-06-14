@@ -368,4 +368,43 @@ void ClassCollection::fullReport() {
     _getch(); // A way of pausing.
 }
 
+bool ClassCollection::fullStudentReport(std::string name) {
+    bool flag = false;
+    std::vector<student> foundStudents;
+    for (student i : students) {
+        if (i.getlName() == name) {
+            flag = true;
+            foundStudents.push_back(i);
+        }
+    }
+    if (foundStudents.size() > 1) { // If there are multiple students with the same last name...
+        std::vector<std::string> studentNames(foundStudents.size());
+        for (int i = 0; i < foundStudents.size(); i++) {
+            studentNames[i] = foundStudents[i].getfName() + ", " + foundStudents[i].getlName();
+
+        }studentNames.push_back("Back to Menu"); // Return option
+        Menu choice(studentNames, "Multiple Students with the lastname " + name + " were found. How would you like to proceed?\n");
+        int option = choice.getSelectedOption();
+        if (option < foundStudents.size()) {
+            std::cout << foundStudents[option];
+            std::cout << "\nPress any key to continue: ";
+            _getch(); // A way of pausing.
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else if (foundStudents.size() == 1) {
+        std::cout << foundStudents[0];
+        std::cout << "\nPress any key to continue: ";
+        _getch(); // A way of pausing.
+        return true;
+    }
+    else {
+        return false;
+    }
+    return flag;
+}
+
 #pragma endregion
