@@ -19,7 +19,7 @@ const int MIN_SCORE = 0; // The minimum score allowed (0 is recommended)
 const int MIN_COURSES = 1; // The minimum number of courses allowed (1 is recommended)
 const int COURSE_NAME_LIMIT = 20; // Limit in characters for the course name
 const int DISIPLINARY_CHANCE = 5; // The chance in percent for a disciplinary issue to arise.
-const int TABLE_SPACES = 25; // A constant used for table spaceing (CHANGING THIS WILL SCREW UP OUTPUT)
+const int TABLE_SPACES = 28; // A constant used for table spaceing (CHANGING THIS WILL SCREW UP OUTPUT)
 
 const int PASSING_AVG = 90; // The min grade average needed for passing
 const int PASSING_COURSES = 5; // The min course number needed for passing
@@ -354,10 +354,18 @@ void ClassCollection::fullReport() {
         flag = false;
         for (int i = 1; i < sortCopy.size(); i++) {
             if (sortCopy[i - 1].getlName().compare(sortCopy[i].getlName()) > 0) { // Alphabetical logic.
-                student temp = sortCopy[i - 1];
+                student temp = sortCopy[i - 1]; // Student swap logic
                 sortCopy[i - 1] = sortCopy[i];
                 sortCopy[i] = temp;
                 flag = true;
+            }
+            else if (sortCopy[i - 1].getlName().compare(sortCopy[i].getlName()) == 0) {
+                if (sortCopy[i - 1].getfName().compare(sortCopy[i].getfName()) > 0) { // Sorting by first name if the lastname is identical.
+                    student temp = sortCopy[i - 1]; // Student swap logic
+                    sortCopy[i - 1] = sortCopy[i];
+                    sortCopy[i] = temp;
+                    flag = true;
+                }
             }
         }
     }
@@ -371,7 +379,7 @@ void ClassCollection::fullReport() {
 bool ClassCollection::fullStudentReport(std::string name) {
     bool flag = false;
     std::vector<student> foundStudents;
-    for (student i : students) {
+    for (student i : students) { // Looping through the students and finding those with the needed lastname
         if (i.getlName() == name) {
             flag = true;
             foundStudents.push_back(i);
@@ -406,5 +414,43 @@ bool ClassCollection::fullStudentReport(std::string name) {
     }
     return flag;
 }
+
+void ClassCollection::gpaReport() {
+    std::vector<student> sortCopy = students; // Copying the students vector in order to not accidentally mutate the orignal.
+    bool flag = true;
+    while (flag) { // Sorting the students by gpa.
+        flag = false;
+        for (int i = 1; i < sortCopy.size(); i++) {
+            if (sortCopy[i - 1].getAvg() < sortCopy[i].getAvg()) { // Numerical logic.
+                student temp = sortCopy[i - 1]; // Student swap logic
+                sortCopy[i - 1] = sortCopy[i];
+                sortCopy[i] = temp;
+                flag = true;
+            }
+            else if (sortCopy[i - 1].getAvg() == sortCopy[i].getAvg()) {
+                if (sortCopy[i - 1].getlName().compare(sortCopy[i].getlName()) > 0) { // Sorting by lastname if the gpa is identical.
+                    student temp = sortCopy[i - 1]; // Student swap logic
+                    sortCopy[i - 1] = sortCopy[i];
+                    sortCopy[i] = temp;
+                    flag = true;
+                }else if (sortCopy[i - 1].getlName().compare(sortCopy[i].getlName()) == 0) {
+                    if (sortCopy[i - 1].getfName().compare(sortCopy[i].getfName()) > 0) { // Sorting by first name if the lastname is identical.
+                        student temp = sortCopy[i - 1]; // Student swap logic
+                        sortCopy[i - 1] = sortCopy[i];
+                        sortCopy[i] = temp;
+                        flag = true;
+                    }
+                }
+            }
+        }
+    }
+    std::cout << "Name" << std::string(TABLE_SPACES - 4, ' ') << "GPA\n";
+    for (student i : sortCopy) {
+        std::cout << i.getfName() + ' ' + i.getlName() << std::string(TABLE_SPACES - (i.getfName().length() + i.getlName().length() + 1), ' ') << i.getAvg() << std::endl;
+    }
+    std::cout << "\nPress any key to continue: ";
+    _getch(); // A way of pausing.
+}
+
 
 #pragma endregion

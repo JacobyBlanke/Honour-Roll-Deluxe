@@ -13,6 +13,21 @@ Physical Education
 95
 English
 90
+Timothy 
+Korolev
+95
+N
+5
+Chemistry
+100
+Algebra
+95
+Comp Sci
+95
+Physical Education 
+95
+English
+90
 Zephy
 B
 30

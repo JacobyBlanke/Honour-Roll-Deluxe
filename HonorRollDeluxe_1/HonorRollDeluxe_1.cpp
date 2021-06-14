@@ -109,6 +109,9 @@ int main() {
 							} while (true);
 							
 						}
+						else if (option == 2) {
+							currentClass.gpaReport();
+						}
 					} while (yn.getSelectedOption() == 0);
 				}
 				else if (option == 3) {
