@@ -1,7 +1,7 @@
-Alexei 
+Timothy
 Korolev
 95
-N
+Y
 5
 Chemistry
 100
@@ -13,10 +13,10 @@ Physical Education
 95
 English
 90
-Timothy 
+Alexei
 Korolev
 95
-N
+Y
 5
 Chemistry
 100

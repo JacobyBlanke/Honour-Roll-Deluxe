@@ -112,6 +112,35 @@ int main() {
 						else if (option == 2) {
 							currentClass.gpaReport();
 						}
+						else if (option == 3) {
+							do {
+								std::cout << "\n\tPlease enter the lastname of the student: ";
+								std::string name = "";
+								getline(std::cin, name);
+								if (!currentClass.fullStudentReport(name)) {
+									m.options = { "Back to Reports Menu", "Try again", "Quit" };
+									m.prompt = "Student not found. How would you like to proceed?\n";
+								}
+								else {
+									m.options = { "Back to Reports Menu", "Enter another student", "Quit" };
+									m.prompt = "How would you like to proceed?\n";
+								}
+								std::cout << "\033[2J\033[1;1H";
+								option = m.getSelectedOption();
+								if (option == 0) { // Logic for the three options.
+									break;
+								}
+								else if (option == 1) {
+									continue;
+								}
+								else {
+									exit(0);
+								}
+							} while (true);
+						}
+						else if (option == 4) {
+							currentClass.disciplinaryReport();
+						}
 					} while (yn.getSelectedOption() == 0);
 				}
 				else if (option == 3) {

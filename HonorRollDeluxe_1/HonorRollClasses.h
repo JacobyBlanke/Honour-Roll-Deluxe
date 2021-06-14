@@ -39,6 +39,7 @@ public:
     void update(); // Updates the entire class
     int getAvg(); // Returns the current student's average
     double getGpa(); // Returns the GPA
+    bool hasInfraction(); // Returns whether or not the student has an infraction.
     std::string getlName(); // Returns the first name
     std::string getfName(); // Returns the last name
     void setfName(std::string); // Sets the first name
@@ -101,7 +102,7 @@ public:
     void fullReport(); // Displays the full report.
     bool fullStudentReport(std::string); // Displays the full report for a specific student. Returns true if successful and false if not.
     void gpaReport(); // Displays the gpa report.
-    bool gpaStudentReport(); // Displays the gpa report for a specific student. Returns true if successful and false if not.
+    bool gpaStudentReport(std::string); // Displays the gpa report for a specific student. Returns true if successful and false if not.
     void disciplinaryReport(); // Displays the disciplinary infractions of all students.
 
 };

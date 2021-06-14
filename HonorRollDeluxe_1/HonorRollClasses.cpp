@@ -24,6 +24,8 @@ const int TABLE_SPACES = 28; // A constant used for table spaceing (CHANGING THI
 const int PASSING_AVG = 90; // The min grade average needed for passing
 const int PASSING_COURSES = 5; // The min course number needed for passing
 
+char holderChar = ' ';
+
 void build_student()
 {
     std::ifstream infileClass("Classes.txt");
@@ -193,6 +195,10 @@ void student::setfName(std::string newName) {
 
 void student::setlName(std::string newName) {
     lName = newName;
+}
+
+bool student::hasInfraction() {
+    return hasDisciplineIssue;
 }
 
 void student::update()
@@ -373,7 +379,7 @@ void ClassCollection::fullReport() {
         std::cout << i;
     }
     std::cout << "\nPress any key to continue: "; 
-    _getch(); // A way of pausing.
+    holderChar = _getch(); // A way of pausing.
 }
 
 bool ClassCollection::fullStudentReport(std::string name) {
@@ -396,7 +402,7 @@ bool ClassCollection::fullStudentReport(std::string name) {
         if (option < foundStudents.size()) {
             std::cout << foundStudents[option];
             std::cout << "\nPress any key to continue: ";
-            _getch(); // A way of pausing.
+            holderChar = _getch(); // A way of pausing.
             return true;
         }
         else {
@@ -406,7 +412,7 @@ bool ClassCollection::fullStudentReport(std::string name) {
     else if (foundStudents.size() == 1) {
         std::cout << foundStudents[0];
         std::cout << "\nPress any key to continue: ";
-        _getch(); // A way of pausing.
+        holderChar = _getch(); // A way of pausing.
         return true;
     }
     else {
@@ -421,7 +427,7 @@ void ClassCollection::gpaReport() {
     while (flag) { // Sorting the students by gpa.
         flag = false;
         for (int i = 1; i < sortCopy.size(); i++) {
-            if (sortCopy[i - 1].getAvg() < sortCopy[i].getAvg()) { // Numerical logic.
+            if (sortCopy[i - 1].getAvg() < sortCopy[i].getAvg()) { // Numerical logic
                 student temp = sortCopy[i - 1]; // Student swap logic
                 sortCopy[i - 1] = sortCopy[i];
                 sortCopy[i] = temp;
@@ -449,8 +455,80 @@ void ClassCollection::gpaReport() {
         std::cout << i.getfName() + ' ' + i.getlName() << std::string(TABLE_SPACES - (i.getfName().length() + i.getlName().length() + 1), ' ') << i.getAvg() << std::endl;
     }
     std::cout << "\nPress any key to continue: ";
-    _getch(); // A way of pausing.
+    holderChar = _getch(); // A way of pausing.
+}
+bool ClassCollection::gpaStudentReport(std::string name) {
+    bool flag = false;
+    std::vector<student> foundStudents;
+    for (student i : students) { // Looping through the students and finding those with the needed lastname
+        if (i.getlName() == name) {
+            flag = true;
+            foundStudents.push_back(i);
+        }
+    }
+    if (foundStudents.size() > 1) { // If there are multiple students with the same last name...
+        std::vector<std::string> studentNames(foundStudents.size());
+        for (int i = 0; i < foundStudents.size(); i++) {
+            studentNames[i] = foundStudents[i].getfName() + ", " + foundStudents[i].getlName();
+
+        }studentNames.push_back("Back to Menu"); // Return option
+        Menu choice(studentNames, "Multiple Students with the lastname " + name + " were found. How would you like to proceed?\n");
+        int option = choice.getSelectedOption();
+        if (option < foundStudents.size()) {
+            std::cout << foundStudents[option].getfName() + ' ' + foundStudents[option].getlName() << std::string(TABLE_SPACES - (foundStudents[option].getfName().length() + foundStudents[option].getlName().length() + 1), ' ') << foundStudents[option].getAvg() << std::endl;
+            std::cout << "\nPress any key to continue: ";
+            holderChar = _getch(); // A way of pausing.
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else if (foundStudents.size() == 1) {
+        std::cout << foundStudents[0].getfName() + ' ' + foundStudents[0].getlName() << std::string(TABLE_SPACES - (foundStudents[0].getfName().length() + foundStudents[0].getlName().length() + 1), ' ') << foundStudents[0].getAvg() << std::endl;
+        std::cout << "\nPress any key to continue: ";
+        holderChar = _getch(); // A way of pausing.
+        return true;
+    }
+    else {
+        return false;
+    }
+    return flag;
 }
 
+void ClassCollection::disciplinaryReport() {
+    bool flag = false;
+    std::vector<student> foundStudents;
+    for (student i : students) { // Looping through the students and finding those with infractions
+        if (i.hasInfraction()) {
+            flag = true;
+            foundStudents.push_back(i);
+        }
+    }
+
+    while (flag) { // Sorting the students by gpa.
+        flag = false;
+        for (int i = 1; i < foundStudents.size(); i++) {
+            if (foundStudents[i - 1].getlName().compare(foundStudents[i].getlName()) > 0) { // Alphabetical logic.
+                student temp = foundStudents[i - 1]; // Student swap logic
+                foundStudents[i - 1] = foundStudents[i];
+                foundStudents[i] = temp;
+                flag = true;
+            }
+            else if (foundStudents[i - 1].getlName().compare(foundStudents[i].getlName()) == 0) {
+                if (foundStudents[i - 1].getfName().compare(foundStudents[i].getfName()) > 0) { // Sorting by first name if the lastname is identical.
+                    student temp = foundStudents[i - 1]; // Student swap logic
+                    foundStudents[i - 1] = foundStudents[i];
+                    foundStudents[i] = temp;
+                    flag = true;
+                }
+            }
+        }
+    }
+    std::cout << "Num" << std::string(TABLE_SPACES - 3, ' ') << "Student\n";
+    for (int i = 0; i < foundStudents.size(); i++) {
+        std::cout << std::to_string(i + 1) << std::string(TABLE_SPACES - std::to_string(i + 1).length(), ' ') << foundStudents[i].getfName() << ' ' << foundStudents[i].getlName() << std::endl;
+    }
+}
 
 #pragma endregion
