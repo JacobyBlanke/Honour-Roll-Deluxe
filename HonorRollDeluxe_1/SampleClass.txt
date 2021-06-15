@@ -1,6 +1,5 @@
 Timothy
 Korolev
-95
 Y
 5
 Chemistry
@@ -15,8 +14,7 @@ English
 90
 Alexei
 Korolev
-95
-Y
+N
 5
 Chemistry
 100
@@ -30,15 +28,27 @@ English
 90
 Zephy
 B
-30
 N
 1
 Test
 30
 Jeff
 Carman
-30
 N
 1
 Test
 30
+Graph
+Iowa
+N
+5
+Course 1 which is a 
+100
+Course_2
+97
+Course_3
+97
+Course_4
+96
+Course_5
+85

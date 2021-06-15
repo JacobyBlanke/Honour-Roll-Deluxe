@@ -7,7 +7,6 @@
   *		6/13/21 - Changed File Structure. It is now:
   *			fName
   *			lName
-  *			percentAvg
   *			disciplinaryIssue? (Y or N)
   *			numberOfCourses
   *			Course_1
@@ -22,8 +21,6 @@
 #include <conio.h>
 #include <fstream>
 #include "GetData.h"
-
-const std::string PASSWORD = "1111";
 
 int main() {
 
@@ -65,12 +62,8 @@ int main() {
 					} while (yn.getSelectedOption() == 0); // Yes / no re-run logic
 				}
 				else if (option == 1) {
-					std::cout << "\n\tPlease enter the password to proceed: ";
-					std::string enteredPassword = "";
-					getline(std::cin, enteredPassword);
-					if (enteredPassword == PASSWORD) {
-						// Administrator Mode.
-					}
+					currentClass.administrator();
+					currentClass.syncFile(); // Saving all changes done in admin mode.
 				}
 				else if (option == 2) {
 					do {
@@ -141,6 +134,7 @@ int main() {
 						else if (option == 4) {
 							currentClass.disciplinaryReport();
 						}
+						std::cout << "\033[2J\033[1;1H";
 					} while (yn.getSelectedOption() == 0);
 				}
 				else if (option == 3) {
@@ -150,9 +144,7 @@ int main() {
 			
 		}
 		else {
-			optionsList.clear();
-			optionsList = {"Exit the program", "Return to the Main Menu"};
-			Menu errorMenu(optionsList, "How would you like to proceed?\n");
+			Menu errorMenu(std::vector<std::string>{"Exit the program", "Return to the Main Menu"}, "How would you like to proceed?\n");
 			if (errorMenu.getSelectedOption() == 0) {
 				break;
 			}

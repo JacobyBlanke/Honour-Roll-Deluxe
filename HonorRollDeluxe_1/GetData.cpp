@@ -150,10 +150,10 @@ int Menu::getSelectedOption() {
 		printData += prompt;
 		for (int i = 0; i < options.size(); i++) {
 			if (i == currentSelected) {
-				printData += " # " + options[i] + " # \n";
+				printData += " > " + options[i] + " < \n";
 			}
 			else {
-				printData += " O " + options[i] + " O \n";
+				printData += "    " + options[i] + "   \n";
 			}
 		}
 		std::cout << printData;

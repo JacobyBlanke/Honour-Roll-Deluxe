@@ -31,8 +31,7 @@ private:
 public:
     student();
     student(std::string, std::string);
-    student(std::string, std::string, int, bool, std::vector<Course>); //firstname, lastname, total average, disciplinary infraction.
-    void sort_classes();
+    student(std::string, std::string, bool, std::vector<Course>); //firstname, lastname, total average, disciplinary infraction.
     void promptGrades(); // Prompts all the grades of the student, returns true if eligible for HR.
     void updateAverage(); // Updates the average to match current grades.
     void updateEligibility(); // Updates the eligibility for Honor Roll
@@ -40,6 +39,7 @@ public:
     int getAvg(); // Returns the current student's average
     double getGpa(); // Returns the GPA
     bool hasInfraction(); // Returns whether or not the student has an infraction.
+    void changeInfraction(bool);
     std::string getlName(); // Returns the first name
     std::string getfName(); // Returns the last name
     void setfName(std::string); // Sets the first name
@@ -97,12 +97,12 @@ public:
     void setPath(std::string);
     void setFile(EasyFile); // Sets the classFile to the givenFile.
     void addStudent(student);
-    void removeStudent(student);
     bool readData(); // Reads the data from the classFile
     void fullReport(); // Displays the full report.
     bool fullStudentReport(std::string); // Displays the full report for a specific student. Returns true if successful and false if not.
     void gpaReport(); // Displays the gpa report.
     bool gpaStudentReport(std::string); // Displays the gpa report for a specific student. Returns true if successful and false if not.
     void disciplinaryReport(); // Displays the disciplinary infractions of all students.
-
+    void administrator(); // Enables administrator mode.
+    void syncFile(); // Rewrites the file to match new data.
 };

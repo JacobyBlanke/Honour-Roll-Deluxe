@@ -25,6 +25,12 @@ const int PASSING_AVG = 90; // The min grade average needed for passing
 const int PASSING_COURSES = 5; // The min course number needed for passing
 
 char holderChar = ' ';
+const std::string PASSWORD = "1111";
+
+void pause() {
+    std::cout << "\nPress any key to continue: ";
+    holderChar = _getch(); // A way of pausing.
+}
 
 void build_student()
 {
@@ -120,13 +126,13 @@ student::student(std::string firstName, std::string lastName)
   lName = lastName;
 }
 
-student::student(std::string firstName, std::string lastName, int avgGrade, bool disciplineInfraction, std::vector<Course> classesNamesAndGrades)
+student::student(std::string firstName, std::string lastName, bool disciplineInfraction, std::vector<Course> classesNamesAndGrades)
 {
   fName = firstName;
   lName = lastName;
   hasDisciplineIssue = disciplineInfraction;
-  average = avgGrade;
   courses = classesNamesAndGrades; 
+  update();
 }
 
 void student::promptGrades() { // Prompts the user for grades.
@@ -201,6 +207,11 @@ bool student::hasInfraction() {
     return hasDisciplineIssue;
 }
 
+void student::changeInfraction(bool newInfraction) {
+    hasDisciplineIssue = newInfraction;
+    updateEligibility();
+}
+
 void student::update()
 {
     updateAverage(); // Average must be updated prior to eligibility
@@ -208,7 +219,7 @@ void student::update()
 }
 
 std::string student::getSaveString() {
-    std::string fin = fName + "\n" + lName + "\n" + std::to_string(average) + "\n";
+    std::string fin = fName + "\n" + lName + "\n";
     (hasDisciplineIssue) ? fin += "Y\n" : fin += "N\n";
     fin += std::to_string(courses.size()) + "\n";
     for (Course i : courses) {
@@ -322,11 +333,10 @@ bool ClassCollection::readData() {
     if (classFile.hasFile()) {
         classFile.readFile();
         std::string currentLine = classFile.nextLine();
-        while (currentLine != "CODE:EOF" && abs(classFile.getCursor() - classFile.size()) > 5) {
+        while (currentLine != "CODE:EOF" && abs(classFile.getCursor() - classFile.size()) > 2) {
             try {
                 std::string fName = currentLine;
                 std::string lName = classFile.nextLine();
-                int avg = stoi(classFile.nextLine());
                 bool issue = (classFile.nextLine()[0] == 'Y') ? true : false;
                 int courseNum = stoi(classFile.nextLine());
                 std::vector<Course> foundCourses;
@@ -336,7 +346,7 @@ bool ClassCollection::readData() {
                     Course newCourse(courseName, courseGrade);
                     foundCourses.push_back(newCourse);
                 }
-                student newStudent(fName, lName, avg, issue, foundCourses);
+                student newStudent(fName, lName, issue, foundCourses);
                 newStudent.update();
                 students.push_back(newStudent);
                 currentLine = classFile.nextLine();
@@ -376,10 +386,9 @@ void ClassCollection::fullReport() {
         }
     }
     for (student i : sortCopy) {
-        std::cout << i;
+        std::cout << i << std::endl << "-------------------------------------";
     }
-    std::cout << "\nPress any key to continue: "; 
-    holderChar = _getch(); // A way of pausing.
+    pause();
 }
 
 bool ClassCollection::fullStudentReport(std::string name) {
@@ -399,20 +408,18 @@ bool ClassCollection::fullStudentReport(std::string name) {
         }studentNames.push_back("Back to Menu"); // Return option
         Menu choice(studentNames, "Multiple Students with the lastname " + name + " were found. How would you like to proceed?\n");
         int option = choice.getSelectedOption();
-        if (option < foundStudents.size()) {
+        if (option < foundStudents.size()) { // If a student was selected..
             std::cout << foundStudents[option];
-            std::cout << "\nPress any key to continue: ";
-            holderChar = _getch(); // A way of pausing.
+            pause();
             return true;
         }
-        else {
+        else { // If "Back to Menu" was selected..
             return false;
         }
     }
     else if (foundStudents.size() == 1) {
         std::cout << foundStudents[0];
-        std::cout << "\nPress any key to continue: ";
-        holderChar = _getch(); // A way of pausing.
+        pause();
         return true;
     }
     else {
@@ -454,8 +461,7 @@ void ClassCollection::gpaReport() {
     for (student i : sortCopy) {
         std::cout << i.getfName() + ' ' + i.getlName() << std::string(TABLE_SPACES - (i.getfName().length() + i.getlName().length() + 1), ' ') << i.getAvg() << std::endl;
     }
-    std::cout << "\nPress any key to continue: ";
-    holderChar = _getch(); // A way of pausing.
+    pause();
 }
 bool ClassCollection::gpaStudentReport(std::string name) {
     bool flag = false;
@@ -476,8 +482,7 @@ bool ClassCollection::gpaStudentReport(std::string name) {
         int option = choice.getSelectedOption();
         if (option < foundStudents.size()) {
             std::cout << foundStudents[option].getfName() + ' ' + foundStudents[option].getlName() << std::string(TABLE_SPACES - (foundStudents[option].getfName().length() + foundStudents[option].getlName().length() + 1), ' ') << foundStudents[option].getAvg() << std::endl;
-            std::cout << "\nPress any key to continue: ";
-            holderChar = _getch(); // A way of pausing.
+            pause();
             return true;
         }
         else {
@@ -486,8 +491,7 @@ bool ClassCollection::gpaStudentReport(std::string name) {
     }
     else if (foundStudents.size() == 1) {
         std::cout << foundStudents[0].getfName() + ' ' + foundStudents[0].getlName() << std::string(TABLE_SPACES - (foundStudents[0].getfName().length() + foundStudents[0].getlName().length() + 1), ' ') << foundStudents[0].getAvg() << std::endl;
-        std::cout << "\nPress any key to continue: ";
-        holderChar = _getch(); // A way of pausing.
+        pause();
         return true;
     }
     else {
@@ -528,6 +532,84 @@ void ClassCollection::disciplinaryReport() {
     std::cout << "Num" << std::string(TABLE_SPACES - 3, ' ') << "Student\n";
     for (int i = 0; i < foundStudents.size(); i++) {
         std::cout << std::to_string(i + 1) << std::string(TABLE_SPACES - std::to_string(i + 1).length(), ' ') << foundStudents[i].getfName() << ' ' << foundStudents[i].getlName() << std::endl;
+    }
+}
+
+void ClassCollection::administrator() {
+    std::cout << "\n\tPlease enter the password to proceed: ";
+    std::string input = "";
+    getline(std::cin, input);
+    if (input == PASSWORD) { // Seeing if the password matches.
+        do {
+            std::cout << "\n\tPassword accepted.\n\nEnter the name of the student to flip the discipline issue value (enter nothing to exit): ";
+            getline(std::cin, input);
+            if (input == "") // If the user entered nothing..
+                return; // Exit out.
+            std::vector<student> foundStudents;
+            std::vector<int> indexes;
+            for (int i = 0; i < students.size(); i++) { // Looping through the students and finding those with the needed lastname
+                if (students[i].getlName() == input) {
+                    foundStudents.push_back(students[i]);
+                    indexes.push_back(i);
+                }
+            }
+
+            if (foundStudents.size() > 1) { // If there are multiple students with the same last name...
+                std::vector<std::string> studentNames(foundStudents.size());
+                for (int i = 0; i < foundStudents.size(); i++) {
+                    studentNames[i] = foundStudents[i].getfName() + ", " + foundStudents[i].getlName();
+
+                }studentNames.push_back("Back to Menu"); // Return option
+                Menu choice(studentNames, "Multiple Students with the lastname " + input + " were found. How would you like to proceed?\n");
+                int option = choice.getSelectedOption();
+                if (option < foundStudents.size()) { // If a student was selected..
+                    choice.options = { "Yes", "No" };
+                    choice.prompt = "Change the infraction to...\n";
+                    if (choice.getSelectedOption() == 0) { // Yes selection
+                        students[indexes[option]].changeInfraction(true);
+                    }
+                    else { // No selection
+                        students[indexes[option]].changeInfraction(false);
+                    }
+                }
+                else { // If "Back to Menu" was selected..
+                    return;
+                }
+
+            }
+            else if (foundStudents.size() == 1) { // Same logic as above, but with one known student.
+                Menu choice;
+                choice.options = { "Yes", "No" };
+                choice.prompt = "Change the infraction to...\n";
+                if (choice.getSelectedOption() == 0) {
+                    students[indexes[0]].changeInfraction(true);
+                }
+                else {
+                    students[indexes[0]].changeInfraction(false);
+                }
+                
+            }
+            else {
+                break;
+            }
+        } while (true); // Potential errors below.
+        std::cout << "No student with the lastname " + input + " was found.\n";
+        pause();
+        std::cout << "\033[2J\033[1;1H";
+        return;
+    }
+    else {
+        std::cout << "Invalid Password.\n";
+        pause();
+        std::cout << "\033[2J\033[1;1H";
+        return;
+    }
+}
+
+void ClassCollection::syncFile() {
+    classFile.overwriteString("");
+    for (student i : students) {
+        classFile.appendString(i.getSaveString());
     }
 }
 

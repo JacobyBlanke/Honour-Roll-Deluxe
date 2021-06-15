@@ -54,5 +54,8 @@
     <Text Include="SampleClass.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="TestClass.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

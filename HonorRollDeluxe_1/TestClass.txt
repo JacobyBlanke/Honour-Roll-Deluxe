@@ -1,0 +1,120 @@
+Aaa
+Bbbbbb
+N
+8
+A1
+95
+Bb 2
+91
+Ccc 3
+92
+Dddd 4
+100
+Eeeee 5
+93
+Ffffff 6
+95
+Ggggggg 7
+95
+Hhhhhhhh 8
+97
+Ccccc
+Dddddddddd
+N
+8
+A1
+50
+Bb 2
+71
+Ccc 3
+71
+Dddd 4
+80
+Eeeee 5
+65
+Ffffff 6
+78
+Ggggggg 7
+78
+Hhhhhhhh 8
+68
+
+Eeeee
+N
+4
+Computer Science
+100
+Biology
+90
+Chemistry
+99
+Calculus 1
+97
+Ffff
+Gggggg
+N
+4
+Computer Science
+75
+Biology
+78
+Chemistry
+90
+Calculus 1
+90
+H
+H
+Y
+8
+A1
+95
+Bb 2
+91
+Ccc 3
+92
+Dddd 4
+100
+Eeeee 5
+93
+Ffffff 6
+95
+Ggggggg 7
+95
+Hhhhhhhh 8
+97
+Iiiiiii
+Jjj
+Y
+5
+A1
+50
+Bb 2
+71
+Ccc 3
+71
+Dddd 4
+80
+Eeeee 5
+65
+Kkkkk
+Kkkkkkkk
+Y
+4
+Computer Science
+100
+Biology
+90
+Chemistry
+99
+Calculus 1
+97
+Ll
+Mmm
+Y
+3
+Computer Science
+75
+Chemistry
+78
+Calculus 1
+90
