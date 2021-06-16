@@ -139,7 +139,7 @@ void student::promptGrades() { // Prompts the user for grades.
     std::cout << "Enter the number of courses you take (" + std::to_string(MIN_COURSES) + " - " + std::to_string(MAX_COURSES) + "): ";
     int courseNum = 0;
     while (!getValidInt(courseNum) || courseNum < MIN_COURSES || courseNum > MAX_COURSES) {
-      std::cout << "\n\tInvalid. Make sure it is between " + std::to_string(MIN_COURSES) + " and " + std::to_string(MAX_COURSES) + " inclusevely: ";
+      std::cout << "\n\tInvalid. Make sure it is between " + std::to_string(MIN_COURSES) + " and " + std::to_string(MAX_COURSES) + " inclusively: ";
     }
     for (int i = 0; i < courseNum; i++) {
       std::string courseName = "";
