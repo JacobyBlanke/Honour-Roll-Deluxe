@@ -70,6 +70,23 @@ void build_student()
 
 }
 
+inline std::string removeSpaces(std::string input) {
+    std::string output = "";
+    for (char i : input) {
+        if (!isspace(i))
+            output += i;
+    }
+    return output;
+}
+
+inline std::string lowerString(std::string input) {
+    std::string output = "";
+    for (char i : input) {
+        output += tolower(i);
+    }
+    return output;
+}
+
 std::vector<std::string> getFullName()
 {
     std::string givenName = "", arr[2] = { "", "" }, tester, token;
@@ -77,11 +94,7 @@ std::vector<std::string> getFullName()
     for (;;) {
         std::cout << "Please enter your full name: ";
         getline(std::cin, givenName);
-        std::string spaceLess = "";
-        for (char i : givenName) {
-            if (!isspace(i))
-                spaceLess += i;
-        }
+        std::string spaceLess = removeSpaces(givenName);
         if (spaceLess.length() > 0)
             break;
         std::cout << "\nInvalid name. Please have 1 or more character.\n" << std::endl;
@@ -397,11 +410,13 @@ void ClassCollection::fullReport() {
     pause();
 }
 
-bool ClassCollection::fullStudentReport(std::string name) {
+bool ClassCollection::fullStudentReport(std::string givenName) {
     bool flag = false;
     std::vector<student> foundStudents;
+    std::string name = "";
+
     for (student i : students) { // Looping through the students and finding those with the needed lastname
-        if (i.getlName() == name) {
+        if (lowerString(removeSpaces(i.getlName())) == lowerString(removeSpaces(name))) {
             flag = true;
             foundStudents.push_back(i);
         }
@@ -473,7 +488,7 @@ bool ClassCollection::gpaStudentReport(std::string name) {
     bool flag = false;
     std::vector<student> foundStudents;
     for (student i : students) { // Looping through the students and finding those with the needed lastname
-        if (i.getlName() == name) {
+        if (lowerString(removeSpaces(i.getlName())) == lowerString(removeSpaces(name))) {
             flag = true;
             foundStudents.push_back(i);
         }
