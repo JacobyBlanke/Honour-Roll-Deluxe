@@ -11,6 +11,7 @@
 #include <string_view>
 #include <sstream>
 #include <fstream>
+#include <list>
 #include <string>
 
 const int MAX_COURSES = 8; // The maximum number of courses allowed
@@ -76,7 +77,12 @@ std::vector<std::string> getFullName()
     for (;;) {
         std::cout << "Please enter your full name: ";
         getline(std::cin, givenName);
-        if (givenName.length() > 0)
+        std::string spaceLess = "";
+        for (char i : givenName) {
+            if (!isspace(i))
+                spaceLess += i;
+        }
+        if (spaceLess.length() > 0)
             break;
         std::cout << "\nInvalid name. Please have 1 or more character.\n" << std::endl;
     }
