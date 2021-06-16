@@ -71,11 +71,11 @@ int main() {
 						m.options = { "A. Run Full Honor Roll Report", "B. Honor Roll Report for 1 Student", "C. Full GPA Report", "D. GPA Report for 1 Student.", "E. Disciplinary Infractions Report" };
 						m.prompt = "Select your desired report: \n";
 						option = m.getSelectedOption();
-						if (option == 0) {
+						if (option == 0) { // Complete full report.
 							currentClass.fullReport(); // Run the full report if the option is chosen.
 						}
 						
-						else if (option == 1) {
+						else if (option == 1) { // Student full report.
 							do {
 								std::cout << "\n\tPlease enter the lastname of the student: ";
 								std::string name = "";
@@ -103,9 +103,9 @@ int main() {
 							
 						}
 						else if (option == 2) {
-							currentClass.gpaReport();
+							currentClass.gpaReport(); // Run the GPA report.
 						}
-						else if (option == 3) {
+						else if (option == 3) { // Student GPA report.
 							do {
 								std::cout << "\n\tPlease enter the lastname of the student: ";
 								std::string name = "";
@@ -131,7 +131,7 @@ int main() {
 								}
 							} while (true);
 						}
-						else if (option == 4) {
+						else if (option == 4) { // Disciplinary Report.
 							currentClass.disciplinaryReport();
 						}
 						std::cout << "\033[2J\033[1;1H";

@@ -348,27 +348,27 @@ void ClassCollection::addStudent(student s) {
     classFile.appendString(s.getSaveString());
 }
 
-bool ClassCollection::readData() {
+bool ClassCollection::readData() { 
     if (classFile.hasFile()) {
         classFile.readFile();
-        std::string currentLine = classFile.nextLine();
-        while (currentLine != "CODE:EOF" && abs(classFile.getCursor() - classFile.size()) > 2) {
+        std::string currentLine = classFile.nextLine(); 
+        while (currentLine != "CODE:EOF" && abs(classFile.getCursor() - classFile.size()) > 2) { // This will keep looping while there is still valid student data in the file.
             try {
-                std::string fName = currentLine;
-                std::string lName = classFile.nextLine();
-                bool issue = (classFile.nextLine()[0] == 'Y') ? true : false;
-                int courseNum = stoi(classFile.nextLine());
-                std::vector<Course> foundCourses;
-                for (int i = 0; i < courseNum; i++) {
-                    std::string courseName = classFile.nextLine();
-                    int courseGrade = stoi(classFile.nextLine());
-                    Course newCourse(courseName, courseGrade);
-                    foundCourses.push_back(newCourse);
+                std::string fName = currentLine; // The first name is the first line
+                std::string lName = classFile.nextLine(); // Last name is second.
+                bool issue = (classFile.nextLine()[0] == 'Y') ? true : false; // Disciplinary issue is third.
+                int courseNum = stoi(classFile.nextLine()); // Course number fifth
+                std::vector<Course> foundCourses; 
+                for (int i = 0; i < courseNum; i++) { // Looping through the courses.
+                    std::string courseName = classFile.nextLine(); // Course name is first.
+                    int courseGrade = stoi(classFile.nextLine()); // Grade is second.
+                    Course newCourse(courseName, courseGrade); // Creating the course.
+                    foundCourses.push_back(newCourse); // Adding it to the courses vector
                 }
-                student newStudent(fName, lName, issue, foundCourses);
-                newStudent.update();
-                students.push_back(newStudent);
-                currentLine = classFile.nextLine();
+                student newStudent(fName, lName, issue, foundCourses); // Making a student from the data.
+                newStudent.update(); // Updating the values.
+                students.push_back(newStudent); // Adding it to the students vector.
+                currentLine = classFile.nextLine(); // Continuing running.
             }
             catch (...) {
                 std::cout << "An error occured when reading file data. The file may be corrupted or incomplete.";
@@ -438,8 +438,8 @@ bool ClassCollection::fullStudentReport(std::string givenName) {
             return false;
         }
     }
-    else if (foundStudents.size() == 1) {
-        std::cout << foundStudents[0];
+    else if (foundStudents.size() == 1) { // If there's only 1 student..
+        std::cout << foundStudents[0]; // Print that student.
         pause();
         return true;
     }
@@ -479,7 +479,7 @@ void ClassCollection::gpaReport() {
         }
     }
     std::cout << "Name" << std::string(TABLE_SPACES - 4, ' ') << "GPA\n";
-    for (student i : sortCopy) {
+    for (student i : sortCopy) { // Printing out the sorting array.
         std::cout << i.getfName() + ' ' + i.getlName() << std::string(TABLE_SPACES - (i.getfName().length() + i.getlName().length() + 1), ' ') << i.getAvg() << std::endl;
     }
     pause();
@@ -510,8 +510,8 @@ bool ClassCollection::gpaStudentReport(std::string name) {
             return false;
         }
     }
-    else if (foundStudents.size() == 1) {
-        std::cout << foundStudents[0].getfName() + ' ' + foundStudents[0].getlName() << std::string(TABLE_SPACES - (foundStudents[0].getfName().length() + foundStudents[0].getlName().length() + 1), ' ') << foundStudents[0].getAvg() << std::endl;
+    else if (foundStudents.size() == 1) { // If there's 1 student..
+        std::cout << foundStudents[0].getfName() + ' ' + foundStudents[0].getlName() << std::string(TABLE_SPACES - (foundStudents[0].getfName().length() + foundStudents[0].getlName().length() + 1), ' ') << foundStudents[0].getAvg() << std::endl; // Printing out the gpa.
         pause();
         return true;
     }
@@ -616,21 +616,21 @@ void ClassCollection::administrator() {
         } while (true); // Potential errors below.
         std::cout << "No student with the lastname " + input + " was found.\n";
         pause();
-        std::cout << "\033[2J\033[1;1H";
+        std::cout << "\033[2J\033[1;1H"; // Clearing the screen.
         return;
     }
     else {
         std::cout << "Invalid Password.\n";
         pause();
-        std::cout << "\033[2J\033[1;1H";
+        std::cout << "\033[2J\033[1;1H"; // Clearing the screen.
         return;
     }
 }
 
 void ClassCollection::syncFile() {
-    classFile.overwriteString("");
+    classFile.overwriteString(""); // Clears the file.
     for (student i : students) {
-        classFile.appendString(i.getSaveString());
+        classFile.appendString(i.getSaveString()); // Re-writing all the students in.
     }
 }
 
