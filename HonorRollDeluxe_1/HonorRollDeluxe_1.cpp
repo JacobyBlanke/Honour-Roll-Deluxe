@@ -45,7 +45,7 @@ int main() {
 		EasyFile chosenFile(optionsList[option] + ".txt");
 		ClassCollection currentClass(chosenFile);
 		optionsList = { "Yes", "No" };
-		Menu yn(optionsList, "Would you like to add a new student? (y to add a new student): \n"); // A menu for yn applications.
+		Menu yn(optionsList, "Would you like to add a new student?: \n"); // A menu for yn applications.
 		if (currentClass.readData()) {
 			do {
 				optionsList = { "Enter Student Data", "Enter Admin Mode", "Run Reports", "Exit Program" };
