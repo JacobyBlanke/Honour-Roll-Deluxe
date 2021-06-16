@@ -1,8 +1,9 @@
 /**
   * Names: Jacoby Blanke and Alexei Korolev
   * Program Name: Honour Roll Deluxe
-  * Date: 06/11/2021
-  * Known Issues: Code is incomplete. All basic requirements are met, but none of the deluxe requirements are yet fulfilled.
+  * Date: 06/16/2021
+  * Known Issues:
+		+ Using arrow keys in the menus will result in an error warning.
   * Changelog:
   *		6/13/21 - Changed File Structure. It is now:
   *			fName
@@ -14,8 +15,8 @@
   *			Course_2
   *			Grade_2
   *			...
-  *			
-  */ 
+  * Extra: User can create and manage multiple classes with unique files and students.
+  */
 #include <iostream>
 #include "HonorRollClasses.h"
 #include <conio.h>
@@ -25,25 +26,25 @@
 int main() {
 
 	while (true) {
-		EasyFile classList("Classes.txt");
-		classList.readFile();
-		std::vector<std::string> optionsList = classList.getFileData();
-		optionsList.push_back("Add a class");
+		EasyFile classList("Classes.txt"); // Opening the classes file
+		classList.readFile(); // Reading in its data.
+		std::vector<std::string> optionsList = classList.getFileData(); 
+		optionsList.push_back("Add a class"); // Adding the "Add a class" option.
 		Menu m(optionsList, "\t\tWelcome to the Honor Roll Deluxe Version!\n\n Instructions on use : \n\t->Menus: Use 'W' and 'S' to modify your selection and then SPACE or ENTER to confirm.\n\t->Classes: If you create a new class, then the information from the previous classes will be inaccessible when working with that class.\n\t->Naming a class \"CODE:EOF\" will result in a corrupt file.\n\nSelect a class to continue: \n"); // File selection menu.
-		int option = m.getSelectedOption();
-		if (option == optionsList.size() - 1) {
+		int option = m.getSelectedOption(); // The option that the user selects.
+		if (option == optionsList.size() - 1) { // If the "Add a class" option is selected.
 			std::cout << "Enter class name: ";
 			std::string className;
 			getline(std::cin, className);
 			std::ofstream newClass;
-			newClass.open(className + ".txt");
+			newClass.open(className + ".txt"); // Adding the file.
 			newClass << "";
 			newClass.close();
-			classList.appendString("\n" + className);
-			continue;
+			classList.appendString("\n" + className); // Adding the file name to the Classes.txt list.
+			continue; // Reloading.
 		}
-		EasyFile chosenFile(optionsList[option] + ".txt");
-		ClassCollection currentClass(chosenFile);
+		EasyFile chosenFile(optionsList[option] + ".txt"); // Creating the EasyFile.
+		ClassCollection currentClass(chosenFile); // Creating the class from the file.
 		optionsList = { "Yes", "No" };
 		Menu yn(optionsList, "Would you like to add a new student?: \n"); // A menu for yn applications.
 		if (currentClass.readData()) {
@@ -80,11 +81,11 @@ int main() {
 								std::cout << "\n\tPlease enter the lastname of the student: ";
 								std::string name = "";
 								getline(std::cin, name);
-								if (!currentClass.fullStudentReport(name)) {
+								if (!currentClass.fullStudentReport(name)) { // If the name was not found..
 									m.options = { "Back to Reports Menu", "Try again", "Quit" };
 									m.prompt = "Student not found. How would you like to proceed?\n";
 								}
-								else {
+								else { // If the name was found..
 									m.options = { "Back to Reports Menu", "Enter another student", "Quit" };
 									m.prompt = "How would you like to proceed?\n";
 								}

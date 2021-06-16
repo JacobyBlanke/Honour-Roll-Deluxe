@@ -1,10 +1,22 @@
 /**
   * Names: Jacoby Blanke and Alexei Korolev
   * Program Name: Honour Roll Deluxe
-  * Date: 06/11/2021
-  * Known Issues: Code is incomplete. All basic requirements are met, but none of the deluxe requirements are yet fulfilled.
-  */ 
-
+  * Date: 06/16/2021
+  * Known Issues:
+		+ Using arrow keys in the menus will result in an error warning.
+  * Changelog:
+  *		6/13/21 - Changed File Structure. It is now:
+  *			fName
+  *			lName
+  *			disciplinaryIssue? (Y or N)
+  *			numberOfCourses
+  *			Course_1
+  *			Grade_1
+  *			Course_2
+  *			Grade_2
+  *			...
+  * Extra: User can create and manage multiple classes with unique files and students.
+  */
 
 #include "GetData.h"
 
