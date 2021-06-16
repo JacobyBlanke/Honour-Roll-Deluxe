@@ -70,7 +70,7 @@ void build_student()
 
 }
 
-inline std::string removeSpaces(std::string input) {
+std::string removeSpaces(std::string input) {
     std::string output = "";
     for (char i : input) {
         if (!isspace(i))
@@ -79,7 +79,7 @@ inline std::string removeSpaces(std::string input) {
     return output;
 }
 
-inline std::string lowerString(std::string input) {
+std::string lowerString(std::string input) {
     std::string output = "";
     for (char i : input) {
         output += tolower(i);
@@ -410,11 +410,9 @@ void ClassCollection::fullReport() {
     pause();
 }
 
-bool ClassCollection::fullStudentReport(std::string givenName) {
+bool ClassCollection::fullStudentReport(std::string name) {
     bool flag = false;
     std::vector<student> foundStudents;
-    std::string name = "";
-
     for (student i : students) { // Looping through the students and finding those with the needed lastname
         if (lowerString(removeSpaces(i.getlName())) == lowerString(removeSpaces(name))) {
             flag = true;
