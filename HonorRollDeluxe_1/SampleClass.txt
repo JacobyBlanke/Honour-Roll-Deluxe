@@ -1,4 +1,4 @@
-Timothy
+
 Korolev
 Y
 5
@@ -52,3 +52,15 @@ Course_4
 96
 Course_5
 85
+Verona
+Human
+N
+1
+Test
+110
+Urna
+Lana
+N
+1
+Test
+100
