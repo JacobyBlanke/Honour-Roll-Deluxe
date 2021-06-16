@@ -144,12 +144,12 @@ Menu::Menu(std::vector<std::string> givenOptions, std::string givenPrompt) {
 }
 
 int Menu::getSelectedOption() {
-	char enteredChar = 'a';
+	char enteredChar = 'a'; // Initial value. Will change.
 	do {
 		std::string printData = "";
 		printData += prompt;
 		for (int i = 0; i < options.size(); i++) {
-			if (i == currentSelected) {
+			if (i == currentSelected) { // Printing out the option that's selected.
 				printData += " > " + options[i] + " < \n";
 			}
 			else {
@@ -158,12 +158,18 @@ int Menu::getSelectedOption() {
 		}
 		std::cout << printData;
 		enteredChar = (_getch());
-		if (std::tolower(enteredChar) == 'w') {
-			currentSelected = std::max(0, --currentSelected);
+		try { // In a try catch to avoid arrow key errors.
+			if (std::tolower(enteredChar) == 'w') {
+				currentSelected = std::max(0, --currentSelected);
+			}
+			else if (std::tolower(enteredChar) == 's') {
+				currentSelected = std::min((long)options.size() - 1, (long)++currentSelected);
+			}
 		}
-		else if (std::tolower(enteredChar) == 's') {
-			currentSelected = std::min((long)options.size() - 1, (long)++currentSelected);
+		catch (...) {
+			// Do nothing.
 		}
+		
 		std::cout << "\033[2J\033[1;1H";
 	} while (!std::isspace(enteredChar));
 	return currentSelected;
